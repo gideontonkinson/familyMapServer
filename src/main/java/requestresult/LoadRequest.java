@@ -2,10 +2,12 @@ package requestresult;
 
 import model.*;
 
+import java.util.ArrayList;
+
 public class LoadRequest {
-    private User[] users;
-    private Person[] persons;
-    private Event[] events;
+    private ArrayList<User> users;
+    private ArrayList<Person> persons;
+    private ArrayList <Event> events;
 
     /**
      * Creates a LoadRequest
@@ -13,21 +15,21 @@ public class LoadRequest {
      * @param persons
      * @param events
      */
-    public LoadRequest(User[] users, Person[] persons, Event[] events) {
+    public LoadRequest(ArrayList<User> users, ArrayList<Person> persons, ArrayList<Event> events) {
         this.users = users;
         this.persons = persons;
         this.events = events;
     }
 
-    public User[] getUsers() {
+    public ArrayList<User> getUsers() {
         return users;
     }
 
-    public Person[] getPersons() {
+    public ArrayList<Person> getPersons() {
         return persons;
     }
 
-    public Event[] getEvents() {
+    public ArrayList<Event> getEvents() {
         return events;
     }
 }

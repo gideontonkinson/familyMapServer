@@ -1,22 +1,48 @@
 package services;
 
+import dataaccess.*;
 import requestresult.*;
 
 public class Clear {
 
+    private final Database db;
+
     /**
-     * Creates an Clear Service Object
+     * Creates a Clear Service Object
      */
     public Clear() {
+        db = new Database();
     }
 
     /**
-     * Services the ClearRequest
-     * @param r
+     * Clears the database
      * @return ClearResult if successful
      * @throws ResultException if the request was not a success
      */
-    ClearResult clear(ClearRequest r) throws ResultException {
-        return null;
+    public ClearResult clear() throws ResultException {
+        boolean commit = false;
+        try{
+            db.openConnection();
+            PersonDao personDao = new PersonDao(db.getConnection());
+            EventDao eventDao = new EventDao(db.getConnection());
+            UserDao userDao = new UserDao(db.getConnection());
+            AuthTokenDao authTokenDao = new AuthTokenDao(db.getConnection());
+            personDao.clear();
+            eventDao.clear();
+            userDao.clear();
+            authTokenDao.clear();
+            commit = true;
+        } catch (DaoException e) {
+            e.printStackTrace();
+            throw new ResultException(e.getMessage());
+        } finally {
+            try {
+                db.closeConnection(commit);
+            } catch (DaoException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return new ClearResult("Clear succeeded");
     }
 }

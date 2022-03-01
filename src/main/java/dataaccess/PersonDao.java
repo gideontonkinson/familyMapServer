@@ -5,6 +5,7 @@ import model.Model;
 import model.Person;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PersonDao implements Dao{
@@ -89,7 +90,75 @@ public class PersonDao implements Dao{
      * @throws DaoException if data could not be accessed
      */
     public List<Person> getPersonsForUser(String username) throws DaoException {
+        List<Person> persons = new ArrayList<>();
+        ResultSet rs = null;
+        String sql = "SELECT * FROM Person WHERE associatedUsername = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Person person = new Person(rs.getString("personID"), rs.getString("associatedUsername"),
+                        rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"),
+                        rs.getString("fatherID"), rs.getString("motherID"), rs.getString("spouseID"));
+                persons.add(person);
+            }
+            if(persons.size() > 0) {
+                return persons;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Error encountered while finding Person");
+        } finally {
+            if(rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return null;
+    }
+
+    /**
+     * Removes all Persons for User
+     * @param username
+     * @throws DaoException if data could not be accessed
+     */
+    public void clearPersonsForUser(String username) throws DaoException {
+        String sql = "DELETE FROM Person WHERE associatedUsername = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Error encountered while clearing Persons");
+        }
+    }
+
+    /**
+     * Updates the associatedUsername of all Persons with that associatedUsername
+     * @param username
+     * @param newUsername
+     * @return true if the username was updated, false if the User does not exist
+     * @throws DaoException if the username could not be updated
+     */
+    public boolean updateUsername(String username, String newUsername) throws DaoException {
+        int r;
+        String sql = "UPDATE Person SET associatedUsername = ?  WHERE associatedUsername = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, newUsername);
+            stmt.setString(2, username);
+            r = stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Error encountered while updating username on Persons");
+        }
+        if(r > 0){
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -100,18 +169,44 @@ public class PersonDao implements Dao{
      * @throws DaoException if the fatherID could not be updated
      */
     public boolean updateFather(String personID, String fatherID) throws DaoException {
-        return true;
+        int r;
+        String sql = "UPDATE Person SET fatherID = ?  WHERE personID = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, fatherID);
+            stmt.setString(2, personID);
+            r = stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Error encountered while updating fatherID on Persons");
+        }
+        if(r > 0){
+            return true;
+        }
+        return false;
     }
 
     /**
      * Updates the motherID of a Person
      * @param personID
-     * @param spouseID
+     * @param motherID
      * @return true if the motherID was updated, false if the Person or mother does not exist
      * @throws DaoException if the motherID could not be updated
      */
-    public boolean updateMother(String personID, String spouseID) throws DaoException {
-        return true;
+    public boolean updateMother(String personID, String motherID) throws DaoException {
+        int r;
+        String sql = "UPDATE Person SET motherID = ?  WHERE personID = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, motherID);
+            stmt.setString(2, personID);
+            r = stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Error encountered while updating motherID on Persons");
+        }
+        if(r > 0){
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -122,7 +217,20 @@ public class PersonDao implements Dao{
      * @throws DaoException if the spouseID could not be updated
      */
     public boolean updateSpouse(String personID, String spouseID) throws  DaoException {
-        return true;
+        int r;
+        String sql = "UPDATE Person SET spouseID = ?  WHERE personID = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, spouseID);
+            stmt.setString(2, personID);
+            r = stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Error encountered while updating spouseID on Persons");
+        }
+        if(r > 0){
+            return true;
+        }
+        return false;
     }
 
     @Override

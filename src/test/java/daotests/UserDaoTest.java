@@ -1,10 +1,7 @@
 package daotests;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import model.AuthToken;
+import org.junit.jupiter.api.*;
 import dataaccess.*;
 import model.User;
 
@@ -22,12 +19,19 @@ public class UserDaoTest {
     @BeforeEach
     public void setUp() throws DaoException {
         db.openConnection();
-        db.createTables();
+        db.createTablesForTesting();
     }
 
     @AfterEach
     public void tearDown() throws DaoException {
         db.closeConnection(false);
+    }
+
+    @AfterAll
+    static void tearDownAll() throws DaoException{
+        db.openConnection();
+        db.createTablesForTesting();
+        db.closeConnection(true);
     }
 
     @Test
@@ -57,6 +61,67 @@ public class UserDaoTest {
     public void testGetFromDBDNE() throws DaoException {
         userDao = new UserDao(db.getConnection());
         Assertions.assertEquals(null, userDao.getFromDB("gmt27"));
+    }
+
+    @Test
+    public void testValidate() throws DaoException {
+        userDao = new UserDao(db.getConnection());
+        User user = new User("gmt27", "123", "gmt27@byu.edu", "Gideon","Tonkinson","M","124");
+        userDao.addToDB(user);
+        Assertions.assertEquals(true, userDao.validate("gmt27", "123"));
+    }
+
+    @Test
+    public void testValidateWrongPW() throws DaoException {
+        userDao = new UserDao(db.getConnection());
+        User user = new User("gmt27", "123", "gmt27@byu.edu", "Gideon","Tonkinson","M","124");
+        userDao.addToDB(user);
+        Assertions.assertEquals(false, userDao.validate("gmt27", "124"));
+    }
+
+    @Test
+    public void testUpdateUsername() throws DaoException {
+        userDao = new UserDao(db.getConnection());
+        User user = new User("gmt27", "123", "gmt27@byu.edu", "Gideon","Tonkinson","M","124");
+        userDao.addToDB(user);
+        Assertions.assertEquals(true, userDao.updateUsername("gmt27", "gmt28"));
+        Assertions.assertEquals("gmt28", userDao.getFromDB("gmt28").getUsername());
+    }
+
+    @Test
+    public void testUpdateUsernameDNE() throws DaoException {
+        userDao = new UserDao(db.getConnection());
+        Assertions.assertEquals(false, userDao.updateUsername("gmt27", "gmt28"));
+    }
+
+    @Test
+    public void testUpdatePassword() throws DaoException {
+        userDao = new UserDao(db.getConnection());
+        User user = new User("gmt27", "123", "gmt27@byu.edu", "Gideon","Tonkinson","M","124");
+        userDao.addToDB(user);
+        Assertions.assertEquals(true, userDao.updatePassword("gmt27", "124"));
+        Assertions.assertEquals("124", userDao.getFromDB("gmt27").getPassword());
+    }
+
+    @Test
+    public void testUpdatePasswordDNE() throws DaoException {
+        userDao = new UserDao(db.getConnection());
+        Assertions.assertEquals(false, userDao.updatePassword("gmt27", "124"));
+    }
+
+    @Test
+    public void testUpdateEmail() throws DaoException {
+        userDao = new UserDao(db.getConnection());
+        User user = new User("gmt27", "123", "gmt27@byu.edu", "Gideon","Tonkinson","M","124");
+        userDao.addToDB(user);
+        Assertions.assertEquals(true, userDao.updateEmail("gmt27", "gmt27@gmail.com"));
+        Assertions.assertEquals("gmt27@gmail.com", userDao.getFromDB("gmt27").getEmail());
+    }
+
+    @Test
+    public void testUpdateEmailDNE() throws DaoException {
+        userDao = new UserDao(db.getConnection());
+        Assertions.assertEquals(false, userDao.updateEmail("gmt27", "gmt27@gmail.com"));
     }
 
     @Test

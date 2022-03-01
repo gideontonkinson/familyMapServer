@@ -8,8 +8,11 @@ import java.sql.Statement;
 public class Database {
     private Connection conn;
 
-    //Whenever we want to make a change to our database we will have to open a connection and use
-    //Statements created by that connection to initiate transactions
+    /**
+     * Opens the connection to database
+     * @return the connection to the database
+     * @throws DaoException
+     */
     public Connection openConnection() throws DaoException {
         try {
             //The Structure for this Connection is driver:language:path
@@ -37,13 +40,11 @@ public class Database {
         }
     }
 
-    //When we are done manipulating the database it is important to close the connection. This will
-    //End the transaction and allow us to either commit our changes to the database or rollback any
-    //changes that were made before we encountered a potential error.
-
-    //IMPORTANT: IF YOU FAIL TO CLOSE A CONNECTION AND TRY TO REOPEN THE DATABASE THIS WILL CAUSE THE
-    //DATABASE TO LOCK. YOUR CODE MUST ALWAYS INCLUDE A CLOSURE OF THE DATABASE NO MATTER WHAT ERRORS
-    //OR PROBLEMS YOU ENCOUNTER
+    /**
+     * Closes a connection to the database
+     * @param commit
+     * @throws DaoException
+     */
     public void closeConnection(boolean commit) throws DaoException {
         try {
             if (commit) {
@@ -63,14 +64,13 @@ public class Database {
         }
     }
 
+    /**
+     * Creates all the tables for the Family Map Server Database
+     * @throws DaoException
+     */
     public void createTables() throws DaoException {
         try (Statement stmt = conn.createStatement()) {
-
-            stmt.executeUpdate("DROP TABLE IF EXISTS Users;");
-            stmt.executeUpdate("DROP TABLE IF EXISTS Person;");
-            stmt.executeUpdate("DROP TABLE IF EXISTS Events;");
-            stmt.executeUpdate("DROP TABLE IF EXISTS AuthToken;");
-            stmt.executeUpdate("CREATE TABLE Users (" +
+            stmt.executeUpdate("CREATE TABLE Users(" +
                     "username TEXT NOT NULL UNIQUE," +
                     "password TEXT NOT NULL," +
                     "email TEXT NOT NULL," +
@@ -107,6 +107,23 @@ public class Database {
         } catch (SQLException e) {
             throw new DaoException("createTables failed");
         }
+    }
+
+    /**
+     * Drops the tables in the database and then creates them all again for consistent testing
+     * @throws DaoException
+     */
+    public void createTablesForTesting() throws DaoException {
+        try (Statement stmt = conn.createStatement()) {
+
+            stmt.executeUpdate("DROP TABLE IF EXISTS Users;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Person;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Events;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS AuthToken;");
+        } catch (SQLException e) {
+            throw new DaoException("droppingTables failed");
+        }
+        createTables();
     }
 }
 

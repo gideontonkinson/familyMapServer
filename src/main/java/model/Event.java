@@ -1,5 +1,8 @@
 package model;
 
+import java.nio.charset.Charset;
+import java.util.Random;
+
 public class Event implements Model{
     private String eventID;
     private String associatedUsername;
@@ -56,7 +59,7 @@ public class Event implements Model{
         this.city = city;
         this.eventType = eventType;
         this.year = year;
-        generateEventID();
+        this.eventID = generateUniqueID();
     }
 
     public String getEventID() {
@@ -114,13 +117,5 @@ public class Event implements Model{
 
     public void setYear(int year) {
         this.year = year;
-    }
-
-    /**
-     * Generates a unique eventID on creation
-     */
-    private void generateEventID(){
-        String uniqueEventID = "";
-        this.eventID = uniqueEventID;
     }
 }

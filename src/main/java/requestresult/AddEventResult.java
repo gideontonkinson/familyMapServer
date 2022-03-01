@@ -14,5 +14,11 @@ public class AddEventResult {
         this.event = event;
     }
 
+    public Event getEvent() {
+        return event;
+    }
 
+    public boolean isSuccess() {
+        return success;
+    }
 }

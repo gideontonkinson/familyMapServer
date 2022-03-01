@@ -13,4 +13,12 @@ public class AddPersonResult {
     public AddPersonResult(Person person) {
         this.person = person;
     }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
 }

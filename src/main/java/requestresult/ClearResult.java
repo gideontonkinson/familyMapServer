@@ -11,4 +11,12 @@ public class ClearResult {
     public ClearResult(String message) {
         this.message = message;
     }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
 }

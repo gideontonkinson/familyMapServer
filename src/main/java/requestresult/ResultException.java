@@ -10,4 +10,8 @@ public class ResultException extends Exception{
     public ResultException(String message) {
         super(message);
     }
+
+    public boolean isSuccess() {
+        return success;
+    }
 }

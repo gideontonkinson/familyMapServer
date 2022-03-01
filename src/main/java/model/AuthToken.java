@@ -20,7 +20,7 @@ public class AuthToken implements Model{
      */
     public AuthToken(String username) {
         this.username = username;
-        getAuthtoken();
+        this.authtoken = generateUniqueID();
     }
 
     public String getAuthtoken() {
@@ -34,13 +34,5 @@ public class AuthToken implements Model{
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    /**
-     * Generates a unique personID on creation
-     */
-    private void generateAuthtoken(){
-        String uniqueAuthtoken = "";
-        this.authtoken = uniqueAuthtoken;
     }
 }

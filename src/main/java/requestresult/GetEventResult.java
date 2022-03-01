@@ -35,4 +35,44 @@ public class GetEventResult {
         this.eventType = eventType;
         this.year = year;
     }
+
+    public String getAssociatedUsername() {
+        return associatedUsername;
+    }
+
+    public String getEventID() {
+        return eventID;
+    }
+
+    public String getPersonID() {
+        return personID;
+    }
+
+    public float getLatitude() {
+        return latitude;
+    }
+
+    public float getLongitude() {
+        return longitude;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
 }

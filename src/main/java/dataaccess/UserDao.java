@@ -90,40 +90,101 @@ public class UserDao implements Dao {
      * @throws DaoException if there was an error in validating
      */
     public boolean validate (String username, String password) throws DaoException {
-        return true;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM Users WHERE username = ? AND password = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Error encountered while finding User");
+        } finally {
+            if(rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+        return false;
     }
 
     /**
      * Updates the username of a User
-     * @param personID
      * @param username
+     * @param newUsername
      * @return true if the username was updated, false if the User does not exist
      * @throws DaoException if the username could not be updated
      */
-    public boolean updateUserName(String personID, String username) throws DaoException {
-        return true;
+    public boolean updateUsername(String username, String newUsername) throws DaoException {
+        int r;
+        String sql = "UPDATE Users SET username = ?  WHERE username = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, newUsername);
+            stmt.setString(2, username);
+            r = stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Error encountered while updating username on User");
+        }
+        if(r > 0){
+            return true;
+        }
+        return false;
     }
 
     /**
      * Updates the password of a User
-     * @param personID
+     * @param username
      * @param password
      * @return true if the password was updated, false if the User does not exist
      * @throws DaoException if the password could not be updated or User does not exist
      */
-    public boolean updatePassword(String personID, String password) throws DaoException {
-        return true;
+    public boolean updatePassword(String username, String password) throws DaoException {
+        int r;
+        String sql = "UPDATE Users SET password = ?  WHERE username = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, password);
+            stmt.setString(2, username);
+            r = stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Error encountered while updating password on User");
+        }
+        if(r > 0){
+            return true;
+        }
+        return false;
     }
 
     /**
      * Updates the email of a User
-     * @param personID
+     * @param username
      * @param email
      * @return true if the email was updated, false if the User does not exist
      * @throws DaoException if the email could not be updated or User does not exist
      */
-    public boolean updateEmail(String personID, String email) throws DaoException {
-        return true;
+    public boolean updateEmail(String username, String email) throws DaoException {
+        int r;
+        String sql = "UPDATE Users SET email = ?  WHERE username = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            stmt.setString(2, username);
+            r = stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Error encountered while updating password on User");
+        }
+        if(r > 0){
+            return true;
+        }
+        return false;
     }
 
     @Override

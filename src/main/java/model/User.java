@@ -45,7 +45,7 @@ public class User implements Model{
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
-        generatePersonID();
+        this.personID = generateUniqueID();
     }
 
     @Override
@@ -87,13 +87,5 @@ public class User implements Model{
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    /**
-     * Generates a unique personID on creation
-     */
-    private void generatePersonID(){
-        String uniquePersonID = "";
-        this.personID = uniquePersonID;
     }
 }

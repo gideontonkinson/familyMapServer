@@ -32,4 +32,40 @@ public class GetPersonResult {
         this.motherID = motherID;
         this.spouseID = spouseID;
     }
+
+    public String getAssociatedUsername() {
+        return associatedUsername;
+    }
+
+    public String getPersonID() {
+        return personID;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getFatherID() {
+        return fatherID;
+    }
+
+    public String getMotherID() {
+        return motherID;
+    }
+
+    public String getSpouseID() {
+        return spouseID;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
 }
