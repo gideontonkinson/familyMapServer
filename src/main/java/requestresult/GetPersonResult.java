@@ -10,6 +10,7 @@ public class GetPersonResult {
     private String motherID;
     private String spouseID;
     private boolean success = true;
+    private String message;
 
     /**
      * Creates a successful GetPersonResult
@@ -31,6 +32,16 @@ public class GetPersonResult {
         this.fatherID = fatherID;
         this.motherID = motherID;
         this.spouseID = spouseID;
+    }
+
+    /**
+     * Creates a fail GetPersonResult
+     * @param message
+     * @param success
+     */
+    public GetPersonResult(String message, boolean success) {
+        this.message = message;
+        this.success = success;
     }
 
     public String getAssociatedUsername() {
@@ -63,6 +74,10 @@ public class GetPersonResult {
 
     public String getSpouseID() {
         return spouseID;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public boolean isSuccess() {

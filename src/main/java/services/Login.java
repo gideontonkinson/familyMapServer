@@ -25,25 +25,25 @@ public class Login {
      * @return LoginResult if successful
      * @throws ResultException if the request was not a success
      */
-    LoginResult login(LoginRequest r) throws ResultException {
-        String personID = "";
-        String authToken = "";
+    public LoginResult login(LoginRequest r) {
         boolean commit = false;
+        LoginResult result;
         try {
             db.openConnection();
             UserDao userDao = new UserDao(db.getConnection());
             AuthTokenDao authTokenDao = new AuthTokenDao(db.getConnection());
             if(userDao.validate(r.getUsername(), r.getPassword())){
-                personID = userDao.getFromDB(r.getUsername()).getPersonID();
-                authToken = authTokenDao.getAuthTokenFromDB(r.getUsername()).getAuthtoken();
+                String personID = userDao.getFromDB(r.getUsername()).getPersonID();
+                String authToken = authTokenDao.getAuthTokenFromDB(r.getUsername()).getAuthtoken();
+                result = new LoginResult(authToken, r.getUsername(), personID);
             }
             else {
-                throw new ResultException("Error: Wrong Username or Password");
+                result = new LoginResult("Error: Wrong Username or Password", false);
             }
             commit = true;
         } catch (DaoException e) {
             e.printStackTrace();
-            throw new ResultException(e.getMessage());
+            result = new LoginResult(e.getMessage(), false);
         } finally {
             try {
                 db.closeConnection(commit);
@@ -52,6 +52,6 @@ public class Login {
             }
         }
 
-        return new LoginResult(authToken, r.getUsername(), personID);
+        return result;
     }
 }

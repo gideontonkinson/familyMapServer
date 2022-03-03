@@ -1,6 +1,7 @@
 package services;
 
 import dataaccess.*;
+import model.AuthToken;
 import model.Event;
 import model.Person;
 import model.User;
@@ -24,15 +25,24 @@ public class Load {
      * @return LoadResult with a message that it was successful
      * @throws ResultException if an error was encountered
      */
-    public LoadResult load (LoadRequest r) throws ResultException{
+    public LoadResult load (LoadRequest r) {
         boolean commit = false;
+        LoadResult result;
         try {
             db.openConnection();
             PersonDao personDao = new PersonDao(db.getConnection());
             UserDao userDao = new UserDao(db.getConnection());
             EventDao eventDao = new EventDao(db.getConnection());
+            AuthTokenDao authTokenDao = new AuthTokenDao(db.getConnection());
+            personDao.clear();
+            eventDao.clear();
+            userDao.clear();
+            authTokenDao.clear();
+
             for (Person person : r.getPersons()) {
                 personDao.addToDB(person);
+                AuthToken token = new AuthToken(person.getUsername());
+                authTokenDao.addToDB(token);
             }
             for (User user : r.getUsers()) {
                 userDao.addToDB(user);
@@ -40,11 +50,13 @@ public class Load {
             for (Event event : r.getEvents()) {
                 eventDao.addToDB(event);
             }
+            String message = "Successfully added " + r.getUsers().length + " users, " + r.getPersons().length + " persons, and "
+                    + r.getEvents().length + " events.";
+            result = new LoadResult(message);
             commit = true;
-
         } catch (DaoException e) {
             e.printStackTrace();
-            throw new ResultException(e.getMessage());
+            result = new LoadResult(e.getMessage(), false);
         } finally {
             try {
                 db.closeConnection(commit);
@@ -52,8 +64,6 @@ public class Load {
                 e.printStackTrace();
             }
         }
-        String message = "Successfully added " + r.getUsers().size() + " users, " + r.getPersons().size() + " persons, "
-                            + r.getEvents().size() + " events.";
-        return new LoadResult(message);
+        return result;
     }
 }

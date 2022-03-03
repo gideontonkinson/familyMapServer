@@ -1,25 +1,216 @@
 package services;
 
-import dataaccess.Database;
+import com.google.gson.Gson;
+import com.sun.net.httpserver.Authenticator;
+import dataaccess.*;
+import model.Event;
+import model.Person;
+import model.User;
 import requestresult.FillResult;
+import requestresult.LoadRequest;
 import requestresult.ResultException;
 
+import java.io.*;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Random;
+
 public class Fill {
-    private final Database db;
+    private static Database db = new Database();
+    private final Random rand = new Random();
+    private static EventDao eventDao;
+    private static PersonDao personDao;
+    private static UserDao userDao;
+    private StringData fnames;
+    private StringData mnames;
+    private StringData snames;
+    private LocationData locations;
+
+    class Location {
+        String country;
+        String city;
+        float latitude;
+        float longitude;
+
+        public Location(String country, String city, float latitude, float longitude) {
+            this.country = country;
+            this.city = city;
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+    }
+
+    class StringData {
+        ArrayList<String> data;
+
+        public StringData(ArrayList<String> data) {
+            this.data = data;
+        }
+
+        public ArrayList<String> getData() {
+            return data;
+        }
+    }
+
+    class LocationData {
+        ArrayList<Location> data;
+
+        public LocationData(ArrayList<Location> data) {
+            this.data = data;
+        }
+
+        public ArrayList<Location> getData() {
+            return data;
+        }
+    }
 
     /**
      * Creates an Fill Service Object
      */
     public Fill() {
-        db = new Database();
+        Gson gson = new Gson();
+        try {
+            Reader fnamesStream = new FileReader("json/fnames.json");
+            Reader mnamesStream = new FileReader("json/mnames.json");
+            Reader snamesStream = new FileReader("json/snames.json");
+            Reader locationsStream = new FileReader("json/locations.json");
+            fnames = gson.fromJson(fnamesStream, (Type) StringData.class);
+            mnames = gson.fromJson(mnamesStream, (Type) StringData.class);
+            snames = gson.fromJson(snamesStream, (Type) StringData.class);
+            locations = gson.fromJson(locationsStream, (Type) LocationData.class);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
-     * Services the FillRequest
+     * Fills a user with generated data
      * @return FillResult if successful
-     * @throws ResultException if the request was not a success
      */
-    FillResult fill() throws ResultException {
-        return null;
+    public FillResult fill(String username, int generations) {
+        FillResult result;
+        boolean commit = false;
+        try {
+            db.openConnection();
+            eventDao = new EventDao(db.getConnection());
+            personDao = new PersonDao(db.getConnection());
+            userDao = new UserDao(db.getConnection());
+            User u  = userDao.getFromDB(username);
+            generatePerson(username, u.getGender(), generations, 2000, true);
+            int numPeople = (int)(Math.pow(2, generations + 1) - 1);
+            int numEvents = numPeople * 3 - 2;
+            String successfulMessage = "Successfully added " + numPeople + " persons and " + numEvents + " events.";
+            result = new FillResult(successfulMessage);
+        } catch (DaoException e) {
+            e.printStackTrace();
+            result = new FillResult(e.getMessage(), false);
+        } finally {
+            try {
+                db.closeConnection(commit);
+            } catch (DaoException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public void setUp() throws DaoException {
+        db.openConnection();
+        eventDao = new EventDao(db.getConnection());
+        personDao = new PersonDao(db.getConnection());
+        userDao = new UserDao(db.getConnection());
+    }
+
+    public void cleanUp() throws DaoException {
+        db.closeConnection(true);
+    }
+
+    public Person generatePerson(String username, String gender, int generations, int birthYear, boolean root) throws DaoException {
+        Person mother = null;
+        Person father = null;
+        if(generations >= 1) {
+            int motherBirthYear = generateParentBirthYear(birthYear);
+            int fatherBirthYear = generateParentBirthYear(birthYear);
+            int marriageYear;
+            if(motherBirthYear < fatherBirthYear){
+                marriageYear = generateParentMarriageYear(fatherBirthYear);
+            } else {
+                marriageYear = generateParentMarriageYear(motherBirthYear);
+            }
+            mother = generatePerson(username, "f", generations - 1, motherBirthYear, false);
+            father = generatePerson(username, "m", generations - 1, fatherBirthYear, false);
+            mother.setSpouseID(father.getPersonID());
+            father.setSpouseID(mother.getPersonID());
+            personDao.addToDB(mother);
+            personDao.addToDB(father);
+            Location location = locations.getData().get(rand.nextInt(locations.getData().size()));
+            Event motherMarriage = new Event(username, mother.getPersonID(), location.latitude, location.longitude,
+                                        location.country, location.city, "Marriage", marriageYear);
+            Event fatherMarriage = new Event(username, father.getPersonID(), location.latitude, location.longitude,
+                                        location.country, location.city, "Marriage", marriageYear);
+            eventDao.addToDB(motherMarriage);
+            eventDao.addToDB(fatherMarriage);
+        }
+
+        String firstName;
+        if(gender.equalsIgnoreCase("f")){
+            firstName = fnames.getData().get(rand.nextInt(fnames.getData().size()));
+        } else {
+            firstName = mnames.getData().get(rand.nextInt(mnames.getData().size()));
+        }
+        String lastName = snames.getData().get(rand.nextInt(snames.getData().size()));
+        Person person;
+
+        if(root){
+            User user = userDao.getFromDB(username);
+            if(mother == null && father == null){
+                person = new Person(user.getPersonID(), username, user.getFirstName(), user.getLastName(),
+                        user.getGender());
+            } else {
+                person = new Person(user.getPersonID(), username, user.getFirstName(), user.getLastName(),
+                        user.getGender(), father.getPersonID(), mother.getPersonID(), null);
+            }
+        } else {
+            if(mother == null && father == null){
+                person = new Person(username, firstName, lastName, gender);
+            } else {
+                person = new Person(username, firstName, lastName, gender,
+                        father.getPersonID(), mother.getPersonID(), null);
+            }
+        }
+        generateEvents(username, person.getPersonID(), birthYear, root);
+
+        return person;
+    }
+
+    private int generateParentMarriageYear(int youngerParentBirthYear){
+        int marriageYear = youngerParentBirthYear + 13;
+        marriageYear += Math.random() * 30;
+        return marriageYear;
+    }
+
+    private int generateParentBirthYear(int childBirthYear){
+        int parentBirthYear = childBirthYear - 13;
+        parentBirthYear -= Math.random() * 37;
+        return parentBirthYear;
+    }
+
+    private int generateDeathYear(int birthYear){
+        int deathYear = birthYear + 51;
+        deathYear += Math.random() * 69;
+        return deathYear;
+    }
+
+    private void generateEvents(String username, String personID, int birthYear, boolean root) throws DaoException {
+        Location birthLocation = locations.getData().get(rand.nextInt(locations.getData().size()));
+        Event birth = new Event(username, personID, birthLocation.latitude, birthLocation.longitude,
+                birthLocation.country, birthLocation.city, "Birth", birthYear);
+        eventDao.addToDB(birth);
+        if(!root){
+            Location deathLocation = locations.getData().get(rand.nextInt(locations.getData().size()));
+            Event death = new Event(username, personID, deathLocation.latitude, deathLocation.longitude,
+                    deathLocation.country, deathLocation.city, "Death", generateDeathYear(birthYear));
+            eventDao.addToDB(death);
+        }
     }
 }

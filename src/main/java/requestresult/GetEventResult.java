@@ -11,6 +11,7 @@ public class GetEventResult {
     private String eventType;
     private int year;
     private boolean success = true;
+    private String message;
 
     /**
      * Creates a successful GetEventResult
@@ -34,6 +35,16 @@ public class GetEventResult {
         this.city = city;
         this.eventType = eventType;
         this.year = year;
+    }
+
+    /**
+     * Creates a fail GetEventResult
+     * @param message
+     * @param success
+     */
+    public GetEventResult(String message, boolean success) {
+        this.message = message;
+        this.success = success;
     }
 
     public String getAssociatedUsername() {
@@ -70,6 +81,10 @@ public class GetEventResult {
 
     public int getYear() {
         return year;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public boolean isSuccess() {

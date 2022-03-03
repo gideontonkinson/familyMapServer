@@ -3,9 +3,11 @@ package services;
 import dataaccess.DaoException;
 import dataaccess.Database;
 import dataaccess.PersonDao;
+import model.AuthToken;
 import model.Person;
 import requestresult.AddPersonRequest;
 import requestresult.AddPersonResult;
+import requestresult.GetEventResult;
 import requestresult.ResultException;
 
 public class AddPerson {
@@ -23,20 +25,25 @@ public class AddPerson {
      * Services the AddPersonRequest
      * @param r
      * @return AddPersonResult if successful
-     * @throws ResultException if the request was not a success
      */
-    public AddPersonResult addPerson(AddPersonRequest r) throws ResultException {
+    public AddPersonResult addPerson(AddPersonRequest r, AuthToken authToken) {
         Person p = new Person(r.getAssociatedUsername(), r.getFirstName(), r.getLastName(),
                 r.getGender(), r.getFatherID(), r.getMotherID(), r.getSpouseID());
+        AddPersonResult result;
+        if(authToken == null){
+            result = new AddPersonResult("Error: You are not authorized", false);
+            return result;
+        }
         boolean commit = false;
         try {
             db.openConnection();
             PersonDao personDao = new PersonDao(db.getConnection());
             personDao.addToDB(p);
+            result = new AddPersonResult(p);
             commit = true;
         } catch (DaoException e) {
             e.printStackTrace();
-            throw new ResultException(e.getMessage());
+            result = new AddPersonResult(e.getMessage(), false);
         } finally {
             try {
                 db.closeConnection(commit);
@@ -44,6 +51,6 @@ public class AddPerson {
                 e.printStackTrace();
             }
         }
-        return new AddPersonResult(p);
+        return result;
     }
 }

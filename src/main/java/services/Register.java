@@ -1,10 +1,8 @@
 package services;
 
-import dataaccess.AuthTokenDao;
-import dataaccess.DaoException;
-import dataaccess.Database;
-import dataaccess.UserDao;
+import dataaccess.*;
 import model.AuthToken;
+import model.Person;
 import model.User;
 import requestresult.LoginResult;
 import requestresult.RegisterRequest;
@@ -27,24 +25,24 @@ public class Register {
      * @return RegisterResult if successful
      * @throws ResultException if the request was not a success
      */
-    RegisterResult register(RegisterRequest r) throws ResultException {
-        String personID = "";
-        String authCode = "";
+    public RegisterResult register(RegisterRequest r) {
         boolean commit = false;
+        RegisterResult result;
         try {
             db.openConnection();
             UserDao userDao = new UserDao(db.getConnection());
             AuthTokenDao authTokenDao = new AuthTokenDao(db.getConnection());
             User u = new User(r.getUsername(), r.getPassword(), r.getEmail(), r.getFirstName(), r.getLastName(), r.getGender());
             userDao.addToDB(u);
-            personID = u.getPersonID();
+            String personID = u.getPersonID();
             AuthToken authToken = new AuthToken(r.getUsername());
             authTokenDao.addToDB(authToken);
-            authCode = authToken.getAuthtoken();
+            String authCode = authToken.getAuthtoken();
             commit = true;
+            result = new RegisterResult(authCode, r.getUsername(), personID);
         } catch (DaoException e) {
             e.printStackTrace();
-            throw new ResultException(e.getMessage());
+            result = new RegisterResult(e.getMessage(), false);
         } finally {
             try {
                 db.closeConnection(commit);
@@ -52,7 +50,26 @@ public class Register {
                 e.printStackTrace();
             }
         }
-
-        return new RegisterResult(authCode, r.getUsername(), personID);
+        Fill fillService = new Fill();
+        commit = false;
+        try {
+            fillService.setUp();
+            Person p = fillService.generatePerson(r.getUsername(), r.getGender(), 4, 2000, true);
+            fillService.cleanUp();
+            db.openConnection();
+            PersonDao personDao = new PersonDao(db.getConnection());
+            personDao.addToDB(p);
+            commit = true;
+        } catch (DaoException e) {
+            result = new RegisterResult("Error: Could not fill tree for User", false);
+            e.printStackTrace();
+        } finally {
+            try {
+                db.closeConnection(commit);
+            } catch (DaoException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 }

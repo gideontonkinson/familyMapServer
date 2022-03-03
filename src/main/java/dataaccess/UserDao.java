@@ -40,7 +40,7 @@ public class UserDao implements Dao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while finding User");
+            throw new DaoException("Error: Encountered error while finding User");
         } finally {
             if(rs != null) {
                 try {
@@ -76,7 +76,7 @@ public class UserDao implements Dao {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException("Error encountered while inserting User into the database");
+            throw new DaoException("Error: Encountered error while inserting User into the database");
         }
         return true;
     }
@@ -101,7 +101,7 @@ public class UserDao implements Dao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while finding User");
+            throw new DaoException("Error: Encountered error while finding User");
         } finally {
             if(rs != null) {
                 try {
@@ -131,7 +131,7 @@ public class UserDao implements Dao {
             r = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while updating username on User");
+            throw new DaoException("Error: Encountered error while updating username on User");
         }
         if(r > 0){
             return true;
@@ -155,7 +155,7 @@ public class UserDao implements Dao {
             r = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while updating password on User");
+            throw new DaoException("Error: Encountered error while updating password on User");
         }
         if(r > 0){
             return true;
@@ -179,7 +179,7 @@ public class UserDao implements Dao {
             r = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while updating password on User");
+            throw new DaoException("Error: Encountered error while updating password on User");
         }
         if(r > 0){
             return true;
@@ -193,7 +193,7 @@ public class UserDao implements Dao {
             String sql = "DELETE FROM Users";
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
-            throw new DaoException("SQL Error encountered while clearing Users table");
+            throw new DaoException("Error: SQL Error encountered while clearing Users table");
         }
     }
 }

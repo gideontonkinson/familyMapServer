@@ -5,6 +5,7 @@ public class LoginResult {
     private String username;
     private String personID;
     private boolean success = true;
+    private String message;
 
     /**
      * Creates a successful LoginResult
@@ -18,6 +19,16 @@ public class LoginResult {
         this.personID = personID;
     }
 
+    /**
+     * Creates a fail LoginResult
+     * @param message
+     * @param success
+     */
+    public LoginResult(String message, boolean success) {
+        this.message = message;
+        this.success = success;
+    }
+
     public String getAuthtoken() {
         return authtoken;
     }
@@ -28,6 +39,10 @@ public class LoginResult {
 
     public String getPersonID() {
         return personID;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public boolean isSuccess() {

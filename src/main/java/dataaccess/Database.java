@@ -26,7 +26,7 @@ public class Database {
             conn.setAutoCommit(false);
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Unable to open connection to database");
+            throw new DaoException("Error: Unable to open connection to database");
         }
 
         return conn;
@@ -60,7 +60,7 @@ public class Database {
             conn = null;
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Unable to close database connection");
+            throw new DaoException("Error: Unable to close database connection");
         }
     }
 
@@ -121,7 +121,7 @@ public class Database {
             stmt.executeUpdate("DROP TABLE IF EXISTS Events;");
             stmt.executeUpdate("DROP TABLE IF EXISTS AuthToken;");
         } catch (SQLException e) {
-            throw new DaoException("droppingTables failed");
+            throw new DaoException("Error: Dropping tables failed");
         }
         createTables();
     }

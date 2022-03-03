@@ -5,11 +5,21 @@ public class ClearResult {
     private boolean success = true;
 
     /**
-     * Creates a successful clearResult
+     * Creates a successful ClearResult
      * @param message
      */
     public ClearResult(String message) {
         this.message = message;
+    }
+
+    /**
+     * Creates a fail ClearResult
+     * @param message
+     * @param success
+     */
+    public ClearResult(String message, boolean success) {
+        this.message = message;
+        this.success = success;
     }
 
     public String getMessage() {

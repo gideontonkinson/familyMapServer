@@ -36,7 +36,7 @@ public class AuthTokenDao implements Dao{
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while finding AuthToken");
+            throw new DaoException("Error: Encountered error while finding AuthToken");
         } finally {
             if(rs != null) {
                 try {
@@ -69,7 +69,7 @@ public class AuthTokenDao implements Dao{
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while finding AuthToken");
+            throw new DaoException("Error: Encountered error while finding AuthToken");
         } finally {
             if(rs != null) {
                 try {
@@ -100,7 +100,7 @@ public class AuthTokenDao implements Dao{
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException("Error encountered while inserting AuthToken into the database");
+            throw new DaoException("Error: Encountered error while inserting AuthToken into the database");
         }
         return true;
     }
@@ -121,7 +121,7 @@ public class AuthTokenDao implements Dao{
             r = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while updating username on AuthToken");
+            throw new DaoException("Error: Encountered error while updating username on AuthToken");
         }
         if(r > 0){
             return true;
@@ -135,7 +135,7 @@ public class AuthTokenDao implements Dao{
             String sql = "DELETE FROM AuthToken";
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
-            throw new DaoException("SQL Error encountered while clearing AuthToken table");
+            throw new DaoException("Error: SQL Error encountered while clearing AuthToken table");
         }
     }
 }

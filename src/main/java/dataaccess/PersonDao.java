@@ -41,7 +41,7 @@ public class PersonDao implements Dao{
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while finding Person");
+            throw new DaoException("Error: Encountered error while finding Person");
         } finally {
             if(rs != null) {
                 try {
@@ -78,7 +78,7 @@ public class PersonDao implements Dao{
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException("Error encountered while inserting Person into the database");
+            throw new DaoException("Error: Encountered error while inserting Person into the database");
         }
         return true;
     }
@@ -108,7 +108,7 @@ public class PersonDao implements Dao{
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while finding Person");
+            throw new DaoException("Error: Encountered error while finding Person");
         } finally {
             if(rs != null) {
                 try {
@@ -133,7 +133,7 @@ public class PersonDao implements Dao{
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while clearing Persons");
+            throw new DaoException("Error: Encountered error while clearing Persons");
         }
     }
 
@@ -153,7 +153,7 @@ public class PersonDao implements Dao{
             r = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while updating username on Persons");
+            throw new DaoException("Error: Encountered error while updating username on Persons");
         }
         if(r > 0){
             return true;
@@ -177,7 +177,7 @@ public class PersonDao implements Dao{
             r = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while updating fatherID on Persons");
+            throw new DaoException("Error: Encountered error while updating fatherID on Persons");
         }
         if(r > 0){
             return true;
@@ -201,7 +201,7 @@ public class PersonDao implements Dao{
             r = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while updating motherID on Persons");
+            throw new DaoException("Error: Encountered error while updating motherID on Persons");
         }
         if(r > 0){
             return true;
@@ -225,7 +225,7 @@ public class PersonDao implements Dao{
             r = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while updating spouseID on Persons");
+            throw new DaoException("Error: Encountered error while updating spouseID on Persons");
         }
         if(r > 0){
             return true;
@@ -239,7 +239,7 @@ public class PersonDao implements Dao{
             String sql = "DELETE FROM Person";
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
-            throw new DaoException("SQL Error encountered while clearing Person table");
+            throw new DaoException("Error: SQL Error encountered while clearing Person table");
         }
     }
 }

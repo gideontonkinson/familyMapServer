@@ -3,6 +3,7 @@ package services;
 import dataaccess.*;
 import model.AuthToken;
 import model.Person;
+import requestresult.GetEventResult;
 import requestresult.GetPersonResult;
 import requestresult.GetPersonsResult;
 import requestresult.ResultException;
@@ -25,17 +26,32 @@ public class GetPerson {
      * @return GetPersonResult if successful
      * @throws ResultException if the request was not a success
      */
-    public GetPersonResult getPerson(String personID) throws ResultException {
-        Person p;
+    public GetPersonResult getPerson(String personID, AuthToken authToken) {
         boolean commit = false;
+        GetPersonResult result;
+        if(authToken == null){
+            result = new GetPersonResult("Error: You are not authorized", false);
+            return result;
+        }
         try {
             db.openConnection();
             PersonDao personDao = new PersonDao(db.getConnection());
-            p = personDao.getFromDB(personID);
+            Person p = personDao.getFromDB(personID);
+            if(p == null) {
+                result = new GetPersonResult("Error: No person to with that ID", false);
+            } else {
+                if(!p.getUsername().equalsIgnoreCase(authToken.getUsername())){
+                    result = new GetPersonResult("Error: No person to with that ID", false);
+                } else {
+                    result = new GetPersonResult(p.getUsername(), p.getPersonID(), p.getFirstName(),
+                            p.getLastName(), p.getGender(), p.getFatherID(),
+                            p.getMotherID(), p.getSpouseID());
+                }
+            }
             commit = true;
         } catch (DaoException e) {
             e.printStackTrace();
-            throw new ResultException(e.getMessage());
+            result = new GetPersonResult(e.getMessage(), false);
         } finally {
             try {
                 db.closeConnection(commit);
@@ -43,13 +59,8 @@ public class GetPerson {
                 e.printStackTrace();
             }
         }
-        if(personID == null){
-            throw new ResultException("Error: No person to with that ID");
-        }
-        GetPersonResult personResult = new GetPersonResult(p.getUsername(), p.getPersonID(), p.getFirstName(),
-                                                            p.getLastName(), p.getGender(), p.getFatherID(),
-                                                            p.getMotherID(), p.getSpouseID());
-        return personResult;
+
+        return result;
     }
 
     /**
@@ -58,17 +69,26 @@ public class GetPerson {
      * @return GetPersonsResult if successful
      * @throws ResultException if the request was not a success
      */
-    public GetPersonsResult getPersons(AuthToken authToken) throws ResultException {
-        ArrayList<Person> persons;
+    public GetPersonsResult getPersons(AuthToken authToken) {
+        GetPersonsResult result;
+        if(authToken == null){
+            result = new GetPersonsResult("Error: You are not authorized", false);
+            return result;
+        }
         boolean commit = false;
         try {
             db.openConnection();
             PersonDao personDao = new PersonDao(db.getConnection());
-            persons = (ArrayList<Person>) personDao.getPersonsForUser(authToken.getUsername());
-            db.closeConnection(commit);
+            ArrayList<Person> persons = (ArrayList<Person>) personDao.getPersonsForUser(authToken.getUsername());
+            if(persons == null){
+                result = new GetPersonsResult("Error: No Persons for that User", false);
+            } else {
+                result = new GetPersonsResult(persons);
+            }
+            commit = true;
         } catch (DaoException e) {
             e.printStackTrace();
-            throw new ResultException(e.getMessage());
+            result = new GetPersonsResult(e.getMessage(), false);
         } finally {
             try {
                 db.closeConnection(commit);
@@ -76,10 +96,7 @@ public class GetPerson {
                 e.printStackTrace();
             }
         }
-        if (persons == null) {
-            throw new ResultException("Error: No Persons for that User");
-        }
-        GetPersonsResult personsResult = new GetPersonsResult(persons);
-        return personsResult;
+
+        return result;
     }
 }

@@ -26,17 +26,32 @@ public class GetEvent {
      * @return GetEventResult if successful
      * @throws ResultException if the request was not a success
      */
-    public GetEventResult getEvent(String eventID) throws ResultException {
-        Event event;
+    public GetEventResult getEvent(String eventID, AuthToken authToken) {
         boolean commit = false;
+        GetEventResult result;
+        if(authToken == null){
+            result = new GetEventResult("Error: You are not authorized", false);
+            return result;
+        }
         try {
             db.openConnection();
             EventDao eventDao = new EventDao(db.getConnection());
-            event = eventDao.getFromDB(eventID);
+            Event event = eventDao.getFromDB(eventID);
+            if(event == null){
+                result = new GetEventResult("Error: No event with that ID", false);
+            } else {
+                if(!event.getUsername().equalsIgnoreCase(authToken.getUsername())){
+                    result = new GetEventResult("Error: No event with that ID", false);
+                } else {
+                    result = new GetEventResult(event.getUsername(), event.getEventID(), event.getPersonID(),
+                            event.getLatitude(), event.getLongitude(), event.getCountry(),
+                            event.getCity(), event.getEventType(), event.getYear());
+                }
+            }
             commit = true;
         } catch (DaoException e) {
             e.printStackTrace();
-            throw new ResultException(e.getMessage());
+            result = new GetEventResult(e.getMessage(), false);
         } finally {
             try {
                 db.closeConnection(commit);
@@ -44,13 +59,7 @@ public class GetEvent {
                 e.printStackTrace();
             }
         }
-        if(eventID == null){
-            throw new ResultException("No event to with that ID");
-        }
-        GetEventResult eventResult = new GetEventResult(event.getUsername(), event.getEventID(), event.getPersonID(),
-                                                        event.getLatitude(), event.getLongitude(), event.getCountry(),
-                                                        event.getCity(), event.getEventType(), event.getYear());
-        return eventResult;
+        return result;
     }
 
     /**
@@ -59,17 +68,26 @@ public class GetEvent {
      * @return GetEventResult if successful
      * @throws ResultException if the request was not a success
      */
-    public GetEventsResult getEvents(AuthToken authToken) throws ResultException {
-        ArrayList<Event> events;
+    public GetEventsResult getEvents(AuthToken authToken) {
+        GetEventsResult result;
+        if(authToken == null){
+            result = new GetEventsResult("Error: You are not authorized", false);
+            return result;
+        }
         boolean commit = false;
         try {
             db.openConnection();
             EventDao eventDao = new EventDao(db.getConnection());
-            events = (ArrayList<Event>) eventDao.getEventsForUser(authToken.getUsername());
+            ArrayList<Event> events = (ArrayList<Event>) eventDao.getEventsForUser(authToken.getUsername());
+            if (events == null) {
+                result = new GetEventsResult("Error: No Events for that User", false);
+            } else {
+                result = new GetEventsResult(events);
+            }
             commit = true;
         } catch (DaoException e) {
             e.printStackTrace();
-            throw new ResultException(e.getMessage());
+            result = new GetEventsResult(e.getMessage(), false);
         } finally {
             try {
                 db.closeConnection(commit);
@@ -77,11 +95,7 @@ public class GetEvent {
                 e.printStackTrace();
             }
         }
-        if (events == null) {
-            throw new ResultException("No Events for that User");
-        }
-        GetEventsResult eventsResult = new GetEventsResult(events);
 
-        return eventsResult;
+        return result;
     }
 }

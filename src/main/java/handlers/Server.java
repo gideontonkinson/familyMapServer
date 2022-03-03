@@ -2,8 +2,6 @@ package handlers;
 import java.io.*;
 import java.net.*;
 import com.sun.net.httpserver.*;
-import dataaccess.DaoException;
-import dataaccess.Database;
 
 public class Server {
     private static final int MAX_WAITING_CONNECTIONS = 12;

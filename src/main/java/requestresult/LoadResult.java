@@ -12,6 +12,16 @@ public class LoadResult {
         this.message = message;
     }
 
+    /**
+     * Creates a fail LoadResult
+     * @param message
+     * @param success
+     */
+    public LoadResult(String message, boolean success) {
+        this.message = message;
+        this.success = success;
+    }
+
     public String getMessage() {
         return message;
     }

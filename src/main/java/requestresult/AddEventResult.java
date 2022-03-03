@@ -5,6 +5,7 @@ import model.Event;
 public class AddEventResult {
     private Event event;
     private boolean success = true;
+    private String message;
 
     /**
      * Creates a successful AddEventResult
@@ -14,8 +15,22 @@ public class AddEventResult {
         this.event = event;
     }
 
+    /**
+     * Creates a fail AddEventResult
+     * @param message
+     * @param success
+     */
+    public AddEventResult(String message, boolean success) {
+        this.message = message;
+        this.success = success;
+    }
+
     public Event getEvent() {
         return event;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public boolean isSuccess() {

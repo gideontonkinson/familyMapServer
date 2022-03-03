@@ -17,10 +17,10 @@ public class Clear {
     /**
      * Clears the database
      * @return ClearResult if successful
-     * @throws ResultException if the request was not a success
      */
-    public ClearResult clear() throws ResultException {
+    public ClearResult clear() {
         boolean commit = false;
+        ClearResult result;
         try{
             db.openConnection();
             PersonDao personDao = new PersonDao(db.getConnection());
@@ -31,10 +31,11 @@ public class Clear {
             eventDao.clear();
             userDao.clear();
             authTokenDao.clear();
+            result = new ClearResult("Clear succeeded");
             commit = true;
         } catch (DaoException e) {
             e.printStackTrace();
-            throw new ResultException(e.getMessage());
+            result = new ClearResult(e.getMessage(), false);
         } finally {
             try {
                 db.closeConnection(commit);
@@ -43,6 +44,6 @@ public class Clear {
             }
         }
 
-        return new ClearResult("Clear succeeded");
+        return result;
     }
 }

@@ -5,9 +5,9 @@ import model.*;
 import java.util.ArrayList;
 
 public class LoadRequest {
-    private ArrayList<User> users;
-    private ArrayList<Person> persons;
-    private ArrayList <Event> events;
+    private User[] users;
+    private Person[] persons;
+    private Event[] events;
 
     /**
      * Creates a LoadRequest
@@ -15,21 +15,21 @@ public class LoadRequest {
      * @param persons
      * @param events
      */
-    public LoadRequest(ArrayList<User> users, ArrayList<Person> persons, ArrayList<Event> events) {
+    public LoadRequest(User[] users, Person[] persons, Event[] events) {
         this.users = users;
         this.persons = persons;
         this.events = events;
     }
 
-    public ArrayList<User> getUsers() {
+    public User[] getUsers() {
         return users;
     }
 
-    public ArrayList<Person> getPersons() {
+    public Person[] getPersons() {
         return persons;
     }
 
-    public ArrayList<Event> getEvents() {
+    public Event[] getEvents() {
         return events;
     }
 }

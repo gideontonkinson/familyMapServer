@@ -42,7 +42,7 @@ public class EventDao implements Dao{
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while finding Event");
+            throw new DaoException("Error: Encountered error while finding Event");
         } finally {
             if(rs != null) {
                 try {
@@ -110,7 +110,7 @@ public class EventDao implements Dao{
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while finding Events");
+            throw new DaoException("Error: Encountered error while finding Events");
         } finally {
             if (rs != null) {
                 try {
@@ -148,7 +148,7 @@ public class EventDao implements Dao{
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while finding Events");
+            throw new DaoException("Error: Encountered error while finding Events");
         } finally {
             if (rs != null) {
                 try {
@@ -173,7 +173,7 @@ public class EventDao implements Dao{
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while clearing Events");
+            throw new DaoException("Error: Encountered error while clearing Events");
         }
     }
 
@@ -193,7 +193,7 @@ public class EventDao implements Dao{
             r = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while updating username on Events");
+            throw new DaoException("Error: Encountered error while updating username on Events");
         }
         if(r > 0){
             return true;
@@ -217,7 +217,7 @@ public class EventDao implements Dao{
             r = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while updating longitude on Event");
+            throw new DaoException("Error: Encountered error while updating longitude on Event");
         }
         if(r > 0){
             return true;
@@ -241,7 +241,7 @@ public class EventDao implements Dao{
             r = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while updating latitude on Event");
+            throw new DaoException("Error: Encountered error while updating latitude on Event");
         }
         if(r > 0){
             return true;
@@ -265,7 +265,7 @@ public class EventDao implements Dao{
             r = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while updating country on Event");
+            throw new DaoException("Error: Encountered error while updating country on Event");
         }
         if(r > 0){
             return true;
@@ -289,7 +289,7 @@ public class EventDao implements Dao{
             r = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while updating city on Event");
+            throw new DaoException("Error: Encountered error while updating city on Event");
         }
         if(r > 0){
             return true;
@@ -313,7 +313,7 @@ public class EventDao implements Dao{
             r = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Error encountered while updating year on Event");
+            throw new DaoException("Error: Encountered error while updating year on Event");
         }
         if(r > 0){
             return true;
@@ -327,7 +327,7 @@ public class EventDao implements Dao{
             String sql = "DELETE FROM Events";
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
-            throw new DaoException("SQL Error encountered while clearing Events table");
+            throw new DaoException("Error: SQL Error encountered while clearing Events table");
         }
     }
 
