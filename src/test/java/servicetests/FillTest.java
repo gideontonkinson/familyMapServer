@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import requestresult.FillResult;
 import services.Fill;
 
-import java.nio.channels.AsynchronousServerSocketChannel;
 import java.util.ArrayList;
 
 public class FillTest {
@@ -36,7 +36,7 @@ public class FillTest {
     }
 
     @Test
-    public void testFillZeroGens() throws DaoException{
+    public void testGenerateZeroGens() throws DaoException{
         Fill service = new Fill();
         db.openConnection();
         userDao = new UserDao(db.getConnection());
@@ -58,7 +58,7 @@ public class FillTest {
     }
 
     @Test
-    public void testFillFourGens() throws DaoException{
+    public void testGeneratePersonFourGens() throws DaoException{
         Fill service = new Fill();
         db.openConnection();
         userDao = new UserDao(db.getConnection());
@@ -73,5 +73,25 @@ public class FillTest {
         ArrayList<Person> persons = (ArrayList<Person>) personDao.getPersonsForUser("gmt27");
         db.closeConnection(true);
         Assertions.assertEquals(31, persons.size());
+    }
+
+    @Test
+    public void testFill() throws DaoException{
+        Fill service = new Fill();
+        FillResult result = service.fill("gmt27", 4);
+        db.openConnection();
+        personDao = new PersonDao(db.getConnection());
+        ArrayList<Person> persons = (ArrayList<Person>) personDao.getPersonsForUser("gmt27");
+        db.closeConnection(true);
+        Assertions.assertEquals(31, persons.size());
+        Assertions.assertEquals(true, result.isSuccess());
+        Assertions.assertEquals("Successfully added 31 persons and 91 events.", result.getMessage());
+    }
+
+    @Test
+    public void testFillUserDNE() throws DaoException{
+        Fill service = new Fill();
+        FillResult result = service.fill("gmt28", 4);
+        Assertions.assertEquals(false, result.isSuccess());
     }
 }

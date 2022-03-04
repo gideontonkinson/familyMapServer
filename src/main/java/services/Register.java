@@ -50,6 +50,11 @@ public class Register {
                 e.printStackTrace();
             }
         }
+
+        if(!result.isSuccess()){
+            return result;
+        }
+
         Fill fillService = new Fill();
         commit = false;
         try {

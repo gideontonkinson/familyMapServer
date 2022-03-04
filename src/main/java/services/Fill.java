@@ -96,11 +96,20 @@ public class Fill {
             personDao = new PersonDao(db.getConnection());
             userDao = new UserDao(db.getConnection());
             User u  = userDao.getFromDB(username);
-            generatePerson(username, u.getGender(), generations, 2000, true);
+            if(u == null){
+                return new FillResult("Error: User does not exist", false);
+            }
+            Person p = generatePerson(username, u.getGender(), generations, 2000, true);
+            try {
+                personDao.addToDB(p);
+            } catch (DaoException e){
+                e.printStackTrace();
+            }
             int numPeople = (int)(Math.pow(2, generations + 1) - 1);
             int numEvents = numPeople * 3 - 2;
             String successfulMessage = "Successfully added " + numPeople + " persons and " + numEvents + " events.";
             result = new FillResult(successfulMessage);
+            commit = true;
         } catch (DaoException e) {
             e.printStackTrace();
             result = new FillResult(e.getMessage(), false);

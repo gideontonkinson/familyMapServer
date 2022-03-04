@@ -4,8 +4,6 @@ package daotests;
 import dataaccess.DaoException;
 import dataaccess.Database;
 import dataaccess.EventDao;
-import dataaccess.EventDao;
-import model.Event;
 import model.Event;
 import org.junit.jupiter.api.*;
 

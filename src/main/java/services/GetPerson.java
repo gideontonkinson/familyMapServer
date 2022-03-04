@@ -38,10 +38,10 @@ public class GetPerson {
             PersonDao personDao = new PersonDao(db.getConnection());
             Person p = personDao.getFromDB(personID);
             if(p == null) {
-                result = new GetPersonResult("Error: No person to with that ID", false);
+                result = new GetPersonResult("Error: No person with that ID", false);
             } else {
                 if(!p.getUsername().equalsIgnoreCase(authToken.getUsername())){
-                    result = new GetPersonResult("Error: No person to with that ID", false);
+                    result = new GetPersonResult("Error: No person with that ID", false);
                 } else {
                     result = new GetPersonResult(p.getUsername(), p.getPersonID(), p.getFirstName(),
                             p.getLastName(), p.getGender(), p.getFatherID(),
