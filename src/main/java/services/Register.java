@@ -21,7 +21,7 @@ public class Register {
 
     /**
      * Creates a new user adds them the database and then generates an authToken for them
-     * @param r RegisterRequest
+     * @param r Request
      * @return RegisterResult if successful
      */
     public RegisterResult register(RegisterRequest r) {

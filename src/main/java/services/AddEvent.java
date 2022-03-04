@@ -21,7 +21,8 @@ public class AddEvent {
 
     /**
      * Services the AddEventRequest
-     * @param r
+     * @param r Request
+     * @param authToken AuthToken of user
      * @return AddEventResult with a message if unsucessful and an event if it was
      */
     public AddEventResult addEvent(AddEventRequest r, AuthToken authToken) {

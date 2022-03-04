@@ -11,7 +11,7 @@ public class UserDao implements Dao {
 
     /**
      * Creates an UserDao with a connection to a database
-     * @param conn
+     * @param conn Connection to the database
      */
     public UserDao(Connection conn) {
         this.conn = conn;
@@ -19,7 +19,7 @@ public class UserDao implements Dao {
 
     /**
      * Gets a User from the database
-     * @param username
+     * @param username username to get User
      * @return User created from database data, null if the User does not exist
      * @throws DaoException if data could not be accessed
      */
@@ -55,7 +55,7 @@ public class UserDao implements Dao {
 
     /**
      * Adds a User to the database
-     * @param userM
+     * @param userM User to add
      * @return true if the User was added to the database, false if User already exists
      * @throws DaoException if object passed was not a User or if the User could not be added
      */
@@ -82,8 +82,8 @@ public class UserDao implements Dao {
 
     /**
      * Logs a user into their account
-     * @param username
-     * @param password
+     * @param username Username for user
+     * @param password Password for user
      * @return true if the User was found and their password matched,
      * false if the User was not found or password did not match the one in the database
      * @throws DaoException if there was an error in validating
@@ -116,8 +116,8 @@ public class UserDao implements Dao {
 
     /**
      * Updates the username of a User
-     * @param username
-     * @param newUsername
+     * @param username username for User to update
+     * @param newUsername new username
      * @return true if the username was updated, false if the User does not exist
      * @throws DaoException if the username could not be updated
      */
@@ -140,7 +140,7 @@ public class UserDao implements Dao {
 
     /**
      * Updates the password of a User
-     * @param username
+     * @param username username for User to update
      * @param password
      * @return true if the password was updated, false if the User does not exist
      * @throws DaoException if the password could not be updated or User does not exist
@@ -164,8 +164,8 @@ public class UserDao implements Dao {
 
     /**
      * Updates the email of a User
-     * @param username
-     * @param email
+     * @param username username for User to update
+     * @param email new email
      * @return true if the email was updated, false if the User does not exist
      * @throws DaoException if the email could not be updated or User does not exist
      */

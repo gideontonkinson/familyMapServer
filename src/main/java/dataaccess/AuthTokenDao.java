@@ -11,7 +11,7 @@ public class AuthTokenDao implements Dao{
 
     /**
      * Creates an AuthTokenDao with a connection to a database
-     * @param conn
+     * @param conn Connection to the database
      */
     public AuthTokenDao(Connection conn) {
         this.conn = conn;
@@ -19,7 +19,7 @@ public class AuthTokenDao implements Dao{
 
     /**
      * Gets an AuthToken from the database
-     * @param authCode
+     * @param authCode AuthToken to get from database
      * @return AuthToken created from database data, null if the AuthToken does not exist for User
      * @throws DaoException if data could not be accessed
      */
@@ -53,7 +53,7 @@ public class AuthTokenDao implements Dao{
 
     /**
      * Gets an AuthToken from the database
-     * @param username
+     * @param username username to get the AuthToken for
      * @return AuthToken created from database data, null if the AuthToken does not exist for User
      * @throws DaoException if data could not be accessed
      */
@@ -86,7 +86,7 @@ public class AuthTokenDao implements Dao{
 
     /**
      * Adds an AuthToken to the database
-     * @param authTokenM
+     * @param authTokenM AuthToken to add to the database
      * @return true if the AuthToken was added, false if AuthToken already exists for User
      * @throws DaoException if object passed was not an AuthToken or if the AuthToken could not be added
      */
@@ -108,8 +108,8 @@ public class AuthTokenDao implements Dao{
 
     /**
      * Updates the username associated with the AuthToken
-     * @param username
-     * @param newUsername
+     * @param username Username for the AuthToken
+     * @param newUsername New Username for the AuthoToken
      * @return true if the username was updated, false if AuthToken does not exist for User
      * @throws DaoException if the username could not be updated
      */

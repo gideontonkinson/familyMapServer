@@ -46,7 +46,7 @@ public class Database {
 
     /**
      * Closes a connection to the database
-     * @param commit
+     * @param commit boolean detailing if the changes should be commited or rolledback
      * @throws DaoException
      */
     public void closeConnection(boolean commit) throws DaoException {

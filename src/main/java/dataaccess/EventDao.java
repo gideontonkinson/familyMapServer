@@ -14,7 +14,7 @@ public class EventDao implements Dao{
 
     /**
      * Creates an EventDao with a connection to a database
-     * @param conn
+     * @param conn Connection to the database
      */
     public EventDao(Connection conn) {
         this.conn = conn;
@@ -22,7 +22,7 @@ public class EventDao implements Dao{
 
     /**
      * Gets an Event from the database
-     * @param eventID
+     * @param eventID Event to from the database
      * @return Event created from the database data, null if Event does not exist
      * @throws DaoException if data could not be accessed
      */
@@ -59,7 +59,7 @@ public class EventDao implements Dao{
 
     /**
      * Adds an Event to the database
-     * @param eventM
+     * @param eventM Event to add to the database
      * @return true if the Event was added, false if the Event already exists for the Person
      * @throws DaoException if object passed was not an Event or if the Event could not be added
      */
@@ -88,7 +88,7 @@ public class EventDao implements Dao{
 
     /**
      * Returns a list of all Events for a Person
-     * @param personID
+     * @param personID Person to get the events of
      * @return List of Events for a personID
      * @throws DaoException if data could not be accessed
      */
@@ -126,7 +126,7 @@ public class EventDao implements Dao{
 
     /**
      * Returns a list of all Events for a User
-     * @param username
+     * @param username Username to get the events of
      * @return List of Events for a username
      * @throws DaoException if data could not be accessed
      */
@@ -164,7 +164,7 @@ public class EventDao implements Dao{
 
     /**
      * Removes all Events for a User
-     * @param username
+     * @param username username to clear the events for
      * @throws DaoException if data could not be accessed
      */
     public void clearEventsForUser(String username) throws DaoException {
@@ -180,8 +180,8 @@ public class EventDao implements Dao{
 
     /**
      * Updates the associatedUsername of all Events with that associatedUsername
-     * @param username
-     * @param newUsername
+     * @param username username of the user
+     * @param newUsername new username to update
      * @return true if the username was updated, false if the User does not exist
      * @throws DaoException if the username could not be updated
      */
@@ -204,8 +204,8 @@ public class EventDao implements Dao{
 
     /**
      * Updates the longitude of an Event
-     * @param eventID
-     * @param longitude
+     * @param eventID Event to update
+     * @param longitude new logitude
      * @return true if the longitude was updated, false if the Event does not exist
      * @throws DaoException if the longitude could not be updated
      */
@@ -228,8 +228,8 @@ public class EventDao implements Dao{
 
     /**
      * Updates the latitude of an Event
-     * @param eventID
-     * @param latitude
+     * @param eventID Event to update
+     * @param latitude new latitude
      * @return true if the latitude was updated, false if the Event does not exist
      * @throws DaoException if the latitude could not be updated
      */
@@ -252,8 +252,8 @@ public class EventDao implements Dao{
 
     /**
      * Updates the country of an Event
-     * @param eventID
-     * @param country
+     * @param eventID Event to update
+     * @param country new country
      * @return true if the country was updated, false if the Event does not exist
      * @throws DaoException if the country could not be updated
      */
@@ -276,8 +276,8 @@ public class EventDao implements Dao{
 
     /**
      * Updates the city of an Event
-     * @param eventID
-     * @param city
+     * @param eventID Event to update
+     * @param city new city
      * @return true if the country was updated, false if the Event does not exist
      * @throws DaoException if the city could not be updated
      */
@@ -300,8 +300,8 @@ public class EventDao implements Dao{
 
     /**
      * Updates the year of an Event
-     * @param eventID
-     * @param year
+     * @param eventID Event to update
+     * @param year new year
      * @return true if the country was updated, false if the Event does not exist
      * @throws DaoException if the year could not be updated
      */

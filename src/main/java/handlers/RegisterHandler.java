@@ -14,7 +14,7 @@ public class RegisterHandler implements Handler{
 
     /**
      * Handles an HTTP Exchange to register a new User
-     * @param exchange
+     * @param exchange HTTP Exchange
      * @throws IOException
      */
     @Override

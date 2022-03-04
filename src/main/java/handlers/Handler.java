@@ -15,7 +15,7 @@ public interface Handler extends HttpHandler {
 
     /**
      * Checks if a user is authorized
-     * @param reqHeaders
+     * @param reqHeaders Request Header of an HTTP Exchange
      * @return the AuthToken for the user or null if not valid
      * @throws IOException
      */

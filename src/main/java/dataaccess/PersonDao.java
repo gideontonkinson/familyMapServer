@@ -13,7 +13,7 @@ public class PersonDao implements Dao{
 
     /**
      * Creates a PersonDao with a connection to a database
-     * @param conn
+     * @param conn Connection to the database
      */
     public PersonDao(Connection conn) {
         this.conn = conn;
@@ -21,7 +21,7 @@ public class PersonDao implements Dao{
 
     /**
      * Gets a Person from the database
-     * @param personID
+     * @param personID Person to get from database
      * @return Person created from database data
      * @throws DaoException if data could not be accessed or Person does not exist
      */
@@ -57,7 +57,7 @@ public class PersonDao implements Dao{
 
     /**
      * Adds a Person to the database
-     * @param personM
+     * @param personM Person to add
      * @return true if the Person was added, false if the Person already exists
      * @throws DaoException if object passed was not a Person or if the Person could not be added
      */
@@ -85,7 +85,7 @@ public class PersonDao implements Dao{
 
     /**
      * Returns a list of all Persons for User
-     * @param username
+     * @param username username to get Persons for
      * @return List of Persons for a username
      * @throws DaoException if data could not be accessed
      */
@@ -123,7 +123,7 @@ public class PersonDao implements Dao{
 
     /**
      * Removes all Persons for User
-     * @param username
+     * @param username username to clear Persons for
      * @throws DaoException if data could not be accessed
      */
     public void clearPersonsForUser(String username) throws DaoException {
@@ -139,8 +139,8 @@ public class PersonDao implements Dao{
 
     /**
      * Updates the associatedUsername of all Persons with that associatedUsername
-     * @param username
-     * @param newUsername
+     * @param username username to update
+     * @param newUsername new username
      * @return true if the username was updated, false if the User does not exist
      * @throws DaoException if the username could not be updated
      */
@@ -163,8 +163,8 @@ public class PersonDao implements Dao{
 
     /**
      * Updates the fatherID of a Person
-     * @param personID
-     * @param fatherID
+     * @param personID Person to update
+     * @param fatherID Father ID to update
      * @return true if fatherID was updated, false if the Person or father does not exist
      * @throws DaoException if the fatherID could not be updated
      */
@@ -187,8 +187,8 @@ public class PersonDao implements Dao{
 
     /**
      * Updates the motherID of a Person
-     * @param personID
-     * @param motherID
+     * @param personID Person to update
+     * @param motherID Mother ID to update
      * @return true if the motherID was updated, false if the Person or mother does not exist
      * @throws DaoException if the motherID could not be updated
      */
@@ -211,8 +211,8 @@ public class PersonDao implements Dao{
 
     /**
      * Updates the spouseID of a Person
-     * @param personID
-     * @param spouseID
+     * @param personID Person to update
+     * @param spouseID Spouse ID to update
      * @return true fi the spouseID was updated, false if the Person or spouse does not exist
      * @throws DaoException if the spouseID could not be updated
      */

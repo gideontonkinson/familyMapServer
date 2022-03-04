@@ -6,8 +6,8 @@ package dataaccess;
 public class DaoException extends Exception {
 
     /**
-     * Can return a custom message detailing the error
-     * @param message
+     * Thrown if there is an exception in accessing the database
+     * @param message message detailing the error
      */
     public DaoException (String message){
         super(message);

@@ -4,13 +4,16 @@ import model.Event;
 
 /** Serialized HTTP add event result */
 public class AddEventResult {
+    /** Event that was added */
     private Event event;
+    /** Boolean detailing if the request was succesful */
     private boolean success = true;
+    /** Message detailing what happened */
     private String message;
 
     /**
      * Creates a successful AddEventResult
-     * @param event
+     * @param event Event to return
      */
     public AddEventResult(Event event) {
         this.event = event;
@@ -18,8 +21,8 @@ public class AddEventResult {
 
     /**
      * Creates a fail AddEventResult
-     * @param message
-     * @param success
+     * @param message message detailing why it failed
+     * @param success bool true if succeeded
      */
     public AddEventResult(String message, boolean success) {
         this.message = message;

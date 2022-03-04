@@ -71,7 +71,7 @@ public class Fill {
 
         /**
          * Creates StringData object
-         * @param data
+         * @param data String ArrayList
          */
         public StringData(ArrayList<String> data) {
             this.data = data;
@@ -91,7 +91,7 @@ public class Fill {
 
         /**
          * Creates a LocationData
-         * @param data
+         * @param data Location ArrayList
          */
         public LocationData(ArrayList<Location> data) {
             this.data = data;
@@ -182,11 +182,11 @@ public class Fill {
 
     /**
      * Generates a person and their ancestors with semi-random information
-     * @param username
-     * @param gender
-     * @param generations
-     * @param birthYear
-     * @param root
+     * @param username Username to fill data for
+     * @param gender Gender of the person
+     * @param generations Number of generations left to fail
+     * @param birthYear Birth year of person
+     * @param root Boolean, true if the person is the root and won't have a death date
      * @return Person p which is the user base object
      * @throws DaoException if there is an error with the DAOs
      */
@@ -250,7 +250,7 @@ public class Fill {
 
     /**
      * Generates a realistic marriage year for the parents
-     * @param youngerParentBirthYear
+     * @param youngerParentBirthYear Birth year of the younger parent
      * @return int of the marriage year
      */
     private int generateParentMarriageYear(int youngerParentBirthYear){
@@ -261,7 +261,7 @@ public class Fill {
 
     /**
      * Generates a realistic age for the parents
-     * @param childBirthYear
+     * @param childBirthYear Birth year of the child of the person
      * @return int of the parent birth year
      */
     private int generateParentBirthYear(int childBirthYear){
@@ -272,7 +272,7 @@ public class Fill {
 
     /**
      * Generates a realistic death year for a person
-     * @param birthYear
+     * @param birthYear Birth year of person
      * @return int of the person death year
      */
     private int generateDeathYear(int birthYear){
@@ -283,10 +283,10 @@ public class Fill {
 
     /**
      * Generates events for a person
-     * @param username
-     * @param personID
-     * @param birthYear
-     * @param root
+     * @param username Username to fill data for
+     * @param personID ID of person to generate events for
+     * @param birthYear Birth year of the person
+     * @param root Boolean, true if the person is the root and won't have a death date
      * @throws DaoException if there is an error with the DAOs
      */
     private void generateEvents(String username, String personID, int birthYear, boolean root) throws DaoException {

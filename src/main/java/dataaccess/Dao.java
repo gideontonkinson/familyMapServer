@@ -9,7 +9,7 @@ public interface Dao{
 
     /**
      * Gets data from the database and creates an object related to the selected table
-     * @param id
+     * @param id ID to get the correct object from the database
      * @return The Model object created from the data in the database
      * @throws DaoException if there is an error in accessing the database and it's tables
      */
@@ -17,7 +17,7 @@ public interface Dao{
 
     /**
      * Adds a Model and it's data to the database
-     * @param model
+     * @param model type to add to the database
      * @throws DaoException if there was an error in adding a Model to the database
      */
     boolean addToDB(Model model) throws DaoException;

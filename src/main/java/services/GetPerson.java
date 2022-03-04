@@ -22,7 +22,7 @@ public class GetPerson {
 
     /**
      * Gets a single Person from the database and packages it
-     * @param personID
+     * @param personID Unique ID for Person to get
      * @return GetPersonResult if successful
      */
     public GetPersonResult getPerson(String personID, AuthToken authToken) {
@@ -64,7 +64,7 @@ public class GetPerson {
 
     /**
      * Gets all Persons from the database for a User (given their AuthToken) and packages it
-     * @param authToken
+     * @param authToken AuthToken for User
      * @return GetPersonsResult if successful
      */
     public GetPersonsResult getPersons(AuthToken authToken) {

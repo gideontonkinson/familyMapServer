@@ -17,7 +17,7 @@ public class AddEventHandler implements Handler{
 
     /**
      * Handles an HTTP Exchange to add an Event
-     * @param exchange
+     * @param exchange HTTP Exchange
      * @throws IOException
      */
     @Override

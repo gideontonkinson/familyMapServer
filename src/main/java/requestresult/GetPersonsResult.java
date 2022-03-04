@@ -5,8 +5,11 @@ import java.util.ArrayList;
 
 /** Serialized HTTP get persons result */
 public class GetPersonsResult {
+    /** List of Persons */
     private ArrayList<Person> data;
+    /** Boolean detailing if the request was succesful */
     private boolean success = true;
+    /** Message detailing what happened */
     private String message;
 
     /**
@@ -19,8 +22,8 @@ public class GetPersonsResult {
 
     /**
      * Creates a fail GetPersonsResult
-     * @param message
-     * @param success
+     * @param message message detailing why it failed
+     * @param success bool true if succeeded
      */
     public GetPersonsResult(String message, boolean success) {
         this.message = message;

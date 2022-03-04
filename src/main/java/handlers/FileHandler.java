@@ -12,7 +12,7 @@ public class FileHandler implements HttpHandler {
 
     /**
      * Handles an HTTP Exchange to get a file
-     * @param exchange
+     * @param exchange HTTP Exchange
      * @throws IOException
      */
     @Override

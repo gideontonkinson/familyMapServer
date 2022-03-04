@@ -19,7 +19,7 @@ public class GetPersonHandler implements Handler {
 
     /**
      * Handles an HTTP Exchange to get a Person
-     * @param exchange
+     * @param exchange HTTP Exchange
      * @throws IOException
      */
     @Override

@@ -16,7 +16,7 @@ public class AddPersonHandler implements Handler {
 
     /**
      * Handles an HTTP Exchange to add a Person
-     * @param exchange
+     * @param exchange HTTP Exchange
      * @throws IOException
      */
     @Override

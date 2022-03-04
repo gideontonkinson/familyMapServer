@@ -15,7 +15,7 @@ public class LoginHandler implements Handler {
 
     /**
      * Handles an HTTP Exchange to login
-     * @param exchange
+     * @param exchange HTTP Exchange
      * @throws IOException
      */
     public void handle(HttpExchange exchange) throws IOException {

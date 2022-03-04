@@ -7,12 +7,14 @@ import com.sun.net.httpserver.*;
  * Sets up a server that can interact with the API
  */
 public class Server {
+    /** Max waiting connections */
     private static final int MAX_WAITING_CONNECTIONS = 12;
+    /** HTTP Server */
     private HttpServer server;
 
     /**
      * Runs the server found at localhost:{portNumber}
-     * @param portNumber
+     * @param portNumber Port number to the website
      */
     private void run(String portNumber) {
         System.out.println("Initializing HTTP Server");
@@ -38,8 +40,8 @@ public class Server {
     }
 
     /**
-     * Runs the server at the portnumber passed in as the first parameter
-     * @param args
+     * Runs the server at the port number passed in as the first parameter
+     * @param args Arguments for the program
      */
     public static void main(String[] args) {
         String portNumber = args[0];

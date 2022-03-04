@@ -14,7 +14,7 @@ public class LoadHandler implements Handler {
 
     /**
      * Handles an HTTP Exchange to load data into the database
-     * @param exchange
+     * @param exchange HTTP Exchange
      * @throws IOException
      */
     @Override

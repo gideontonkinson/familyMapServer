@@ -22,7 +22,8 @@ public class AddPerson {
 
     /**
      * Services the AddPersonRequest
-     * @param r
+     * @param r Request
+     * @param authToken AuthToken of User
      * @return AddPersonResult if successful
      */
     public AddPersonResult addPerson(AddPersonRequest r, AuthToken authToken) {

@@ -19,7 +19,7 @@ public class GetEventHandler implements Handler {
 
     /**
      * Handles an HTTP Exchange to get an Event
-     * @param exchange
+     * @param exchange HTTP Exchange
      * @throws IOException
      */
     @Override

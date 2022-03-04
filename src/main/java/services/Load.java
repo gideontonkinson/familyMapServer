@@ -22,7 +22,7 @@ public class Load {
 
     /**
      * Takes in the load request and adds the data to the database
-     * @param r LoadRequest
+     * @param r Request
      * @return LoadResult with a message that it was successful
      */
     public LoadResult load (LoadRequest r) {

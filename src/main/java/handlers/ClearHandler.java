@@ -14,7 +14,7 @@ public class ClearHandler implements Handler {
 
     /**
      * Handles an HTTP Exchange to clear the information from the database
-     * @param exchange
+     * @param exchange HTTP Exchange
      * @throws IOException
      */
     @Override

@@ -23,7 +23,7 @@ public class GetEvent {
 
     /**
      * Services the GetEventRequest
-     * @param eventID
+     * @param eventID Unique ID for event to get
      * @return GetEventResult if successful
      */
     public GetEventResult getEvent(String eventID, AuthToken authToken) {
@@ -64,7 +64,7 @@ public class GetEvent {
 
     /**
      * Services the GetEventRequest
-     * @param authToken
+     * @param authToken AuthToken for user
      * @return GetEventResult if successful
      */
     public GetEventsResult getEvents(AuthToken authToken) {
