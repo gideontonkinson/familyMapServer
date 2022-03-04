@@ -1,9 +1,9 @@
 package requestresult;
 
 import model.Event;
-
 import java.util.ArrayList;
 
+/** Serialized HTTP get events result */
 public class GetEventsResult {
     private ArrayList<Event> data;
     private boolean success = true;

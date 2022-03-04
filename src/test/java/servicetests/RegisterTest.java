@@ -9,6 +9,7 @@ import requestresult.RegisterRequest;
 import requestresult.RegisterResult;
 import services.Register;
 
+/** Class to test the Register service */
 public class RegisterTest {
     private static Database db;
     private static EventDao eventDao;

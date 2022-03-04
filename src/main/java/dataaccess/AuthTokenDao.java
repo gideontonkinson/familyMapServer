@@ -2,10 +2,11 @@ package dataaccess;
 
 import model.Model;
 import model.AuthToken;
-
 import java.sql.*;
 
+/** Data Access Object to interact with the AuthToken table */
 public class AuthTokenDao implements Dao{
+    /** Connection to the family map database */
     private final Connection conn;
 
     /**
@@ -129,6 +130,10 @@ public class AuthTokenDao implements Dao{
         return false;
     }
 
+    /**
+     * Clears the AuthToken table
+     * @throws DaoException if there is an error while clearing
+     */
     @Override
     public void clear() throws DaoException {
         try (Statement stmt = conn.createStatement()){

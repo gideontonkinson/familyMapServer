@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 import requestresult.ClearResult;
 import services.Clear;
 
+/** Class to test the Clear service */
 public class ClearTest {
     @Test
     public void testClear(){

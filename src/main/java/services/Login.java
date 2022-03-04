@@ -1,15 +1,12 @@
 package services;
 
 import dataaccess.*;
-import model.Event;
-import model.Person;
-import model.User;
-import requestresult.LoadResult;
 import requestresult.LoginRequest;
 import requestresult.LoginResult;
-import requestresult.ResultException;
 
+/** Services an API request login a user */
 public class Login {
+    /** Connection to the family map database */
     private final Database db;
 
     /**
@@ -20,10 +17,9 @@ public class Login {
     }
 
     /**
-     * Services the LoginRequest
+     * Services the Login Request
      * @param r
      * @return LoginResult if successful
-     * @throws ResultException if the request was not a success
      */
     public LoginResult login(LoginRequest r) {
         boolean commit = false;

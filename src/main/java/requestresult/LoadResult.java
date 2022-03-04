@@ -1,5 +1,6 @@
 package requestresult;
 
+/** Serialized HTTP load result */
 public class LoadResult {
     private String message;
     private boolean success = true;

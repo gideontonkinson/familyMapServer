@@ -6,6 +6,7 @@ import dataaccess.AuthTokenDao;
 import dataaccess.DaoException;
 import dataaccess.Database;
 
+/** Class to test the AuthTokenDao */
 public class AuthTokenDaoTest {
     private static Database db;
     private static AuthTokenDao authTokenDao;

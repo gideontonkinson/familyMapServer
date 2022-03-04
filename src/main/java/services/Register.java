@@ -4,12 +4,12 @@ import dataaccess.*;
 import model.AuthToken;
 import model.Person;
 import model.User;
-import requestresult.LoginResult;
 import requestresult.RegisterRequest;
 import requestresult.RegisterResult;
-import requestresult.ResultException;
 
+/** Services an API request to register a new user and fill their data  */
 public class Register {
+    /** Connection to the family map database */
     private final Database db;
 
     /**
@@ -23,7 +23,6 @@ public class Register {
      * Creates a new user adds them the database and then generates an authToken for them
      * @param r RegisterRequest
      * @return RegisterResult if successful
-     * @throws ResultException if the request was not a success
      */
     public RegisterResult register(RegisterRequest r) {
         boolean commit = false;

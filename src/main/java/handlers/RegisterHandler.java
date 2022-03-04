@@ -4,11 +4,19 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import requestresult.*;
 import services.Register;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 
+/**
+ * Handles an HTTP Request to register a new User
+ */
 public class RegisterHandler implements Handler{
+
+    /**
+     * Handles an HTTP Exchange to register a new User
+     * @param exchange
+     * @throws IOException
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {

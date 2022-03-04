@@ -1,5 +1,6 @@
 package requestresult;
 
+/** Serialized HTTP add event request */
 public class FillResult {
     private String message;
     private boolean success = true;

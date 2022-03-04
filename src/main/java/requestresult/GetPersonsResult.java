@@ -1,9 +1,9 @@
 package requestresult;
 
 import model.Person;
-
 import java.util.ArrayList;
 
+/** Serialized HTTP get persons result */
 public class GetPersonsResult {
     private ArrayList<Person> data;
     private boolean success = true;

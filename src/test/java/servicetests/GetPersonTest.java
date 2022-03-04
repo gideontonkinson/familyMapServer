@@ -13,6 +13,7 @@ import requestresult.GetPersonResult;
 import requestresult.GetPersonsResult;
 import services.GetPerson;
 
+/** Class to test the Get Person service */
 public class GetPersonTest {
     private static Database db;
     private static PersonDao personDao;

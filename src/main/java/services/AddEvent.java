@@ -3,14 +3,13 @@ package services;
 import dataaccess.DaoException;
 import dataaccess.Database;
 import dataaccess.EventDao;
-import dataaccess.PersonDao;
 import model.AuthToken;
 import model.Event;
-import model.Person;
 import requestresult.*;
 
+/** Services an API request to add an event from the database */
 public class AddEvent {
-
+    /** Connection to the family map database */
     private final Database db;
 
     /**

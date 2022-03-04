@@ -13,6 +13,7 @@ import services.Fill;
 
 import java.util.ArrayList;
 
+/** Class to test the Fill service */
 public class FillTest {
     private static Database db;
     private static UserDao userDao;

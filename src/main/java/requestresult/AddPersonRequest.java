@@ -1,5 +1,6 @@
 package requestresult;
 
+/** Serialized HTTP add person request */
 public class AddPersonRequest {
     private String personID;
     private String associatedUsername;

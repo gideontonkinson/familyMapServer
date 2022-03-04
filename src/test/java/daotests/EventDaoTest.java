@@ -7,6 +7,7 @@ import dataaccess.EventDao;
 import model.Event;
 import org.junit.jupiter.api.*;
 
+/** Class to test the EventDao */
 public class EventDaoTest {
     private static Database db;
     private static EventDao eventDao;

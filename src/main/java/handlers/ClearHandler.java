@@ -7,8 +7,16 @@ import com.sun.net.httpserver.*;
 import requestresult.ClearResult;
 import services.Clear;
 
+/**
+ * Handles an HTTP Request to clear the database
+ */
 public class ClearHandler implements Handler {
 
+    /**
+     * Handles an HTTP Exchange to clear the information from the database
+     * @param exchange
+     * @throws IOException
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
        try {

@@ -6,11 +6,19 @@ import com.sun.net.httpserver.HttpExchange;
 import model.AuthToken;
 import requestresult.*;
 import services.AddPerson;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 
+/**
+ * Handles an HTTP Request to add a Person
+ */
 public class AddPersonHandler implements Handler {
+
+    /**
+     * Handles an HTTP Exchange to add a Person
+     * @param exchange
+     * @throws IOException
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         if (exchange.getRequestMethod().equalsIgnoreCase("post")) {

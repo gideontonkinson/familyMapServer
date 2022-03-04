@@ -7,15 +7,21 @@ import model.AuthToken;
 import requestresult.GetPersonResult;
 import requestresult.GetPersonsResult;
 import services.GetPerson;
-
-import java.awt.*;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 
+/**
+ * Handles an HTTP Request to get a Person
+ */
 public class GetPersonHandler implements Handler {
 
+    /**
+     * Handles an HTTP Exchange to get a Person
+     * @param exchange
+     * @throws IOException
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {

@@ -1,13 +1,12 @@
 package dataaccess;
 
-import model.Event;
 import model.Model;
-import model.Person;
 import model.User;
-
 import java.sql.*;
 
+/** Data Access Object to interact with the User table */
 public class UserDao implements Dao {
+    /** Connection to the family map database */
     private final Connection conn;
 
     /**
@@ -187,6 +186,10 @@ public class UserDao implements Dao {
         return false;
     }
 
+    /**
+     * Clears the User table
+     * @throws DaoException if there is an error while clearing
+     */
     @Override
     public void clear() throws DaoException {
         try (Statement stmt = conn.createStatement()){

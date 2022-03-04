@@ -1,5 +1,6 @@
 package requestresult;
 
+/** Serialized HTTP clear result */
 public class ClearResult {
     private String message;
     private boolean success = true;

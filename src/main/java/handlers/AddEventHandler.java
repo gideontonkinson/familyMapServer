@@ -7,11 +7,19 @@ import model.AuthToken;
 import requestresult.AddEventRequest;
 import requestresult.AddEventResult;
 import services.AddEvent;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 
+/**
+ * Handles an HTTP Request to add an Event
+ */
 public class AddEventHandler implements Handler{
+
+    /**
+     * Handles an HTTP Exchange to add an Event
+     * @param exchange
+     * @throws IOException
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         if (exchange.getRequestMethod().equalsIgnoreCase("post")) {

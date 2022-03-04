@@ -1,37 +1,59 @@
 package services;
 
 import com.google.gson.Gson;
-import com.sun.net.httpserver.Authenticator;
 import dataaccess.*;
 import model.Event;
 import model.Person;
 import model.User;
 import requestresult.FillResult;
-import requestresult.LoadRequest;
-import requestresult.ResultException;
+
 
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Random;
 
+/** Services an API request to fill data for a user in the database */
 public class Fill {
+    /** Connection to the family map database */
     private static Database db = new Database();
+    /** Randomizer to select random names or locations */
     private final Random rand = new Random();
+    /** DAO to interact with the Events table */
     private static EventDao eventDao;
+    /** DAO to interact with the Person table */
     private static PersonDao personDao;
+    /** DAO to interact with the User table */
     private static UserDao userDao;
+    /** Holds a list of male first name strings */
     private StringData fnames;
+    /** Holds a list of female first name strings */
     private StringData mnames;
+    /** Holds a list of surname name strings */
     private StringData snames;
+    /** Holds a list of location objects */
     private LocationData locations;
 
+    /**
+     * Holds the information for a location
+     */
     class Location {
+        /** Country name */
         String country;
+        /** City name */
         String city;
+        /** Latitude Information */
         float latitude;
+        /** Longitude Information */
         float longitude;
 
+        /**
+         * Creates a new location
+         * @param country
+         * @param city
+         * @param latitude
+         * @param longitude
+         */
         public Location(String country, String city, float latitude, float longitude) {
             this.country = country;
             this.city = city;
@@ -40,9 +62,17 @@ public class Fill {
         }
     }
 
+    /**
+     * Stores a list of strings (made to convert json data)
+     */
     class StringData {
+        /** String data */
         ArrayList<String> data;
 
+        /**
+         * Creates StringData object
+         * @param data
+         */
         public StringData(ArrayList<String> data) {
             this.data = data;
         }
@@ -52,9 +82,17 @@ public class Fill {
         }
     }
 
+    /**
+     * Stores a list of locations (made to covert json data)
+     */
     class LocationData {
+        /** Location data */
         ArrayList<Location> data;
 
+        /**
+         * Creates a LocationData
+         * @param data
+         */
         public LocationData(ArrayList<Location> data) {
             this.data = data;
         }
@@ -65,7 +103,7 @@ public class Fill {
     }
 
     /**
-     * Creates an Fill Service Object
+     * Creates an Fill Service Object and serializes from the json files
      */
     public Fill() {
         Gson gson = new Gson();
@@ -123,6 +161,10 @@ public class Fill {
         return result;
     }
 
+    /**
+     * Sets up the DAOs and database
+     * @throws DaoException if there is an error with the DAOs
+     */
     public void setUp() throws DaoException {
         db.openConnection();
         eventDao = new EventDao(db.getConnection());
@@ -130,10 +172,24 @@ public class Fill {
         userDao = new UserDao(db.getConnection());
     }
 
+    /**
+     * Closes the connection to the database
+     * @throws DaoException if there is an error with the DAOs
+     */
     public void cleanUp() throws DaoException {
         db.closeConnection(true);
     }
 
+    /**
+     * Generates a person and their ancestors with semi-random information
+     * @param username
+     * @param gender
+     * @param generations
+     * @param birthYear
+     * @param root
+     * @return Person p which is the user base object
+     * @throws DaoException if there is an error with the DAOs
+     */
     public Person generatePerson(String username, String gender, int generations, int birthYear, boolean root) throws DaoException {
         Person mother = null;
         Person father = null;
@@ -192,24 +248,47 @@ public class Fill {
         return person;
     }
 
+    /**
+     * Generates a realistic marriage year for the parents
+     * @param youngerParentBirthYear
+     * @return int of the marriage year
+     */
     private int generateParentMarriageYear(int youngerParentBirthYear){
         int marriageYear = youngerParentBirthYear + 13;
         marriageYear += Math.random() * 30;
         return marriageYear;
     }
 
+    /**
+     * Generates a realistic age for the parents
+     * @param childBirthYear
+     * @return int of the parent birth year
+     */
     private int generateParentBirthYear(int childBirthYear){
         int parentBirthYear = childBirthYear - 13;
         parentBirthYear -= Math.random() * 37;
         return parentBirthYear;
     }
 
+    /**
+     * Generates a realistic death year for a person
+     * @param birthYear
+     * @return int of the person death year
+     */
     private int generateDeathYear(int birthYear){
         int deathYear = birthYear + 51;
         deathYear += Math.random() * 69;
         return deathYear;
     }
 
+    /**
+     * Generates events for a person
+     * @param username
+     * @param personID
+     * @param birthYear
+     * @param root
+     * @throws DaoException if there is an error with the DAOs
+     */
     private void generateEvents(String username, String personID, int birthYear, boolean root) throws DaoException {
         Location birthLocation = locations.getData().get(rand.nextInt(locations.getData().size()));
         Event birth = new Event(username, personID, birthLocation.latitude, birthLocation.longitude,

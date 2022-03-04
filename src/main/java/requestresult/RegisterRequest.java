@@ -1,5 +1,6 @@
 package requestresult;
 
+/** Serialized HTTP register request */
 public class RegisterRequest {
     String username;
     String password;

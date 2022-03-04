@@ -2,8 +2,7 @@ package requestresult;
 
 import model.*;
 
-import java.util.ArrayList;
-
+/** Serialized HTTP load request */
 public class LoadRequest {
     private User[] users;
     private Person[] persons;

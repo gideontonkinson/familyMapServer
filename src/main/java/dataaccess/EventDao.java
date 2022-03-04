@@ -2,13 +2,14 @@ package dataaccess;
 
 import model.Model;
 import model.Event;
-
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 
+/** Data Access Object to interact with the Event table */
 public class EventDao implements Dao{
+    /** Connection to the family map database */
     private final Connection conn;
 
     /**
@@ -321,6 +322,10 @@ public class EventDao implements Dao{
         return false;
     }
 
+    /**
+     * Clears the Event table
+     * @throws DaoException if there is an error while clearing
+     */
     @Override
     public void clear() throws DaoException {
         try (Statement stmt = conn.createStatement()){

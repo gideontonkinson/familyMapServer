@@ -4,6 +4,7 @@ import model.Person;
 import org.junit.jupiter.api.*;
 import dataaccess.*;
 
+/** Class to test the PersonDao */
 public class PersonDaoTest {
     private static Database db;
     private static PersonDao personDao;

@@ -1,5 +1,6 @@
 package requestresult;
 
+/** Serialized HTTP get event result */
 public class GetEventResult {
     private String associatedUsername;
     private String eventID;

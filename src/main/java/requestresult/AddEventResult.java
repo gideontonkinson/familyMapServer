@@ -2,6 +2,7 @@ package requestresult;
 
 import model.Event;
 
+/** Serialized HTTP add event result */
 public class AddEventResult {
     private Event event;
     private boolean success = true;

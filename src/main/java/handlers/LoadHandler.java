@@ -3,13 +3,20 @@ package handlers;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import requestresult.*;
-import services.Clear;
 import services.Load;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 
-public class LoadHandler implements Handler{
+/**
+ * Handles an HTTP Request to laod data into the database
+ */
+public class LoadHandler implements Handler {
+
+    /**
+     * Handles an HTTP Exchange to load data into the database
+     * @param exchange
+     * @throws IOException
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {

@@ -7,13 +7,14 @@ import model.Person;
 import model.User;
 import requestresult.LoadRequest;
 import requestresult.LoadResult;
-import requestresult.ResultException;
 
+/** Services an API request to load information into the database */
 public class Load {
+    /** Connection to the family map database */
     private final Database db;
 
     /**
-     * Creates an Load Service Object
+     * Creates a Load Service Object
      */
     public Load() {
         db = new Database();
@@ -23,7 +24,6 @@ public class Load {
      * Takes in the load request and adds the data to the database
      * @param r LoadRequest
      * @return LoadResult with a message that it was successful
-     * @throws ResultException if an error was encountered
      */
     public LoadResult load (LoadRequest r) {
         boolean commit = false;

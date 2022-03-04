@@ -11,6 +11,7 @@ import requestresult.LoginRequest;
 import requestresult.LoginResult;
 import services.Login;
 
+/** Class to test the Login service */
 public class LoginTest {
     private static Database db;
     private static UserDao userDao;

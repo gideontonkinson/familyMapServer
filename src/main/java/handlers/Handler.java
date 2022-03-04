@@ -1,19 +1,24 @@
 package handlers;
 
-import com.google.gson.Gson;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpHandler;
 import dataaccess.AuthTokenDao;
 import dataaccess.DaoException;
 import dataaccess.Database;
 import model.AuthToken;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
+/**
+ * Handles an HTTP Request
+ */
 public interface Handler extends HttpHandler {
 
+    /**
+     * Checks if a user is authorized
+     * @param reqHeaders
+     * @return the AuthToken for the user or null if not valid
+     * @throws IOException
+     */
     default AuthToken authorize(Headers reqHeaders) throws IOException {
         String authToken = reqHeaders.getFirst("Authorization");
         boolean commit = false;

@@ -9,8 +9,9 @@ import requestresult.*;
 
 import java.util.ArrayList;
 
+/** Services an API request to get an event from the database */
 public class GetEvent {
-
+    /** Connection to the family map database */
     private final Database db;
 
     /**
@@ -24,7 +25,6 @@ public class GetEvent {
      * Services the GetEventRequest
      * @param eventID
      * @return GetEventResult if successful
-     * @throws ResultException if the request was not a success
      */
     public GetEventResult getEvent(String eventID, AuthToken authToken) {
         boolean commit = false;
@@ -66,7 +66,6 @@ public class GetEvent {
      * Services the GetEventRequest
      * @param authToken
      * @return GetEventResult if successful
-     * @throws ResultException if the request was not a success
      */
     public GetEventsResult getEvents(AuthToken authToken) {
         GetEventsResult result;

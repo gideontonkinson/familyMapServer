@@ -7,13 +7,21 @@ import model.AuthToken;
 import requestresult.GetEventResult;
 import requestresult.GetEventsResult;
 import services.GetEvent;
-
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 
-public class GetEventHandler implements Handler{
+/**
+ * Handles an HTTP Request to get an Event
+ */
+public class GetEventHandler implements Handler {
+
+    /**
+     * Handles an HTTP Exchange to get an Event
+     * @param exchange
+     * @throws IOException
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {

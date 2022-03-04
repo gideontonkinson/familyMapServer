@@ -9,6 +9,7 @@ import requestresult.LoadRequest;
 import requestresult.LoadResult;
 import services.Load;
 
+/** Class to test the Load service */
 public class LoadTest {
     @Test
     public void testLoad(){

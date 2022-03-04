@@ -4,11 +4,19 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import requestresult.FillResult;
 import services.Fill;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 
+/**
+ * Handles an HTTP Request to fill data for a user
+ */
 public class FillHandler implements Handler{
+
+    /**
+     * Handles an HTTP Exchange to fill fo-data for a user
+     * @param exchange
+     * @throws IOException
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {

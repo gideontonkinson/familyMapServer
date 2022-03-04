@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import requestresult.*;
 import services.GetEvent;
 
+/** Class to test the Get Event service */
 public class GetEventTest {
     private static Database db;
     private static EventDao eventDao;

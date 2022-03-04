@@ -7,11 +7,10 @@ import model.AuthToken;
 import model.Person;
 import requestresult.AddPersonRequest;
 import requestresult.AddPersonResult;
-import requestresult.GetEventResult;
-import requestresult.ResultException;
 
+/** Services an API request to add a person from the database */
 public class AddPerson {
-
+    /** Connection to the family map database */
     private final Database db;
 
     /**

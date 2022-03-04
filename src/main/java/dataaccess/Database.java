@@ -5,7 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
+/** Database to store the connection */
 public class Database {
+    /** Connection to the family map database */
     private Connection conn;
 
     /**
@@ -15,14 +18,10 @@ public class Database {
      */
     public Connection openConnection() throws DaoException {
         try {
-            //The Structure for this Connection is driver:language:path
-            //The path assumes you start in the root of your project unless given a non-relative path
             final String CONNECTION_URL = "jdbc:sqlite:familymap.db";
 
-            // Open a database connection to the file given in the path
             conn = DriverManager.getConnection(CONNECTION_URL);
 
-            // Start a transaction
             conn.setAutoCommit(false);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -32,6 +31,11 @@ public class Database {
         return conn;
     }
 
+    /**
+     * Gets the connection object
+     * @return Conn
+     * @throws DaoException
+     */
     public Connection getConnection() throws DaoException {
         if(conn == null) {
             return openConnection();
@@ -48,11 +52,8 @@ public class Database {
     public void closeConnection(boolean commit) throws DaoException {
         try {
             if (commit) {
-                //This will commit the changes to the database
                 conn.commit();
             } else {
-                //If we find out something went wrong, pass a false into closeConnection and this
-                //will rollback any changes we made during this connection
                 conn.rollback();
             }
 

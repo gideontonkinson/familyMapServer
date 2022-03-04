@@ -1,5 +1,6 @@
 package requestresult;
 
+/** Serialized HTTP login result */
 public class LoginResult {
     private String authtoken;
     private String username;

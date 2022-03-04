@@ -1,10 +1,10 @@
 package daotests;
 
-import model.AuthToken;
 import org.junit.jupiter.api.*;
 import dataaccess.*;
 import model.User;
 
+/** Class to test the UserDao */
 public class UserDaoTest {
     private static Database db;
     private static UserDao userDao;

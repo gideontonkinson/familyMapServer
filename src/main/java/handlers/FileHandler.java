@@ -2,10 +2,19 @@ package handlers;
 import java.io.*;
 import java.net.*;
 import java.nio.file.Files;
-
 import com.sun.net.httpserver.*;
 
-public class FileHandler implements HttpHandler{
+
+/**
+ * Handles an HTTP Request to get a file
+ */
+public class FileHandler implements HttpHandler {
+
+    /**
+     * Handles an HTTP Exchange to get a file
+     * @param exchange
+     * @throws IOException
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {

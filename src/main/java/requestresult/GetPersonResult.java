@@ -1,5 +1,6 @@
 package requestresult;
 
+/** Serialized HTTP get persons result */
 public class GetPersonResult {
     private String associatedUsername;
     private String personID;

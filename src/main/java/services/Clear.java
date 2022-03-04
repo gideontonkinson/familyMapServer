@@ -3,8 +3,9 @@ package services;
 import dataaccess.*;
 import requestresult.*;
 
+/** Services an API request to clear data from the database */
 public class Clear {
-
+    /** Connection to the family map database */
     private final Database db;
 
     /**

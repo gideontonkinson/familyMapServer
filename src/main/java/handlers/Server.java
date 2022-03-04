@@ -3,10 +3,17 @@ import java.io.*;
 import java.net.*;
 import com.sun.net.httpserver.*;
 
+/**
+ * Sets up a server that can interact with the API
+ */
 public class Server {
     private static final int MAX_WAITING_CONNECTIONS = 12;
     private HttpServer server;
 
+    /**
+     * Runs the server found at localhost:{portNumber}
+     * @param portNumber
+     */
     private void run(String portNumber) {
         System.out.println("Initializing HTTP Server");
         try {
@@ -30,6 +37,10 @@ public class Server {
         System.out.println("Server started");
     }
 
+    /**
+     * Runs the server at the portnumber passed in as the first parameter
+     * @param args
+     */
     public static void main(String[] args) {
         String portNumber = args[0];
         new Server().run(portNumber);

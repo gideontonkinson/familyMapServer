@@ -4,13 +4,20 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import requestresult.*;
 import services.Login;
-import services.Register;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 
-public class LoginHandler implements Handler{
+/**
+ * Handles an HTTP Request to login
+ */
+public class LoginHandler implements Handler {
     @Override
+
+    /**
+     * Handles an HTTP Exchange to login
+     * @param exchange
+     * @throws IOException
+     */
     public void handle(HttpExchange exchange) throws IOException {
         try {
             if (exchange.getRequestMethod().equalsIgnoreCase("post")) {

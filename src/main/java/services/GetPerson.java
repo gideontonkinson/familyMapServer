@@ -3,18 +3,18 @@ package services;
 import dataaccess.*;
 import model.AuthToken;
 import model.Person;
-import requestresult.GetEventResult;
 import requestresult.GetPersonResult;
 import requestresult.GetPersonsResult;
-import requestresult.ResultException;
 
 import java.util.ArrayList;
 
+/** Services an API request to get a person from the database */
 public class GetPerson {
+    /** Connection to the family map database */
     private final Database db;
 
     /**
-     * Creates an GetPerson Service Object
+     * Creates a GetPerson Service Object
      */
     public GetPerson() {
         db = new Database();
@@ -24,7 +24,6 @@ public class GetPerson {
      * Gets a single Person from the database and packages it
      * @param personID
      * @return GetPersonResult if successful
-     * @throws ResultException if the request was not a success
      */
     public GetPersonResult getPerson(String personID, AuthToken authToken) {
         boolean commit = false;
@@ -67,7 +66,6 @@ public class GetPerson {
      * Gets all Persons from the database for a User (given their AuthToken) and packages it
      * @param authToken
      * @return GetPersonsResult if successful
-     * @throws ResultException if the request was not a success
      */
     public GetPersonsResult getPersons(AuthToken authToken) {
         GetPersonsResult result;
