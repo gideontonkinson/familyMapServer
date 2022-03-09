@@ -93,7 +93,7 @@ public class EventDao implements Dao{
      * @throws DaoException if data could not be accessed
      */
     public List<Event> getEventsForPerson(String personID) throws DaoException {
-        List<Event> events = new ArrayList<Event>();
+        List<Event> events = new ArrayList<>();
         ResultSet rs = null;
         String sql = "SELECT * FROM Events WHERE personID = ?;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -131,7 +131,7 @@ public class EventDao implements Dao{
      * @throws DaoException if data could not be accessed
      */
     public List<Event> getEventsForUser(String username) throws DaoException {
-        List<Event> events = new ArrayList<Event>();
+        List<Event> events = new ArrayList<>();
         ResultSet rs = null;
         String sql = "SELECT * FROM Events WHERE associatedUsername = ?;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
